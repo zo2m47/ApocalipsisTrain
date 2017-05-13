@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+  <!--
+  List of railway static data 
+  -->
+  <elementList>
+    <!--
+    name - уникальное имя жд дороги (id)
+    start - название станции от которой идет дорога 
+    end - название станции к которой идет дорога 
+    length
+    -->
+    <element name ="railway_1" start="terminal_1" end="terminal_2" length="100"  view="Railway">
+      <!--
+     resources - сколько ресурсов требуется для разработки этого поезда 
+     -->
+      <market resources="20"/>
+      <!--
+      Списонк аттак на этой станции 
+      -->
+      <attackList>
+        <!--
+        passedCounter - количество пройденых раз этой дороги игроком, условие выполнения аттаки
+        -->
+        <attack passedCounter="0">
+        </attack>
+      </attackList>
+    </element>
+  </elementList>
+ </data> 

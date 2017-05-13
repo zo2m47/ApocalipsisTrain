@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+  <!--List of missions data-->
+  <elementList>
+    <element name="mission_2" view="Mission">
+      <!--
+      Список наград
+      -->
+      <rewards>
+        <!--в качастве награды дается жд дорога 
+        opened - доступна для постройки
+        pusrchased - построена
+        -->
+        <reward name="railway_1" state="opened"/>
+        <!--в качастве награды дается поезд
+        opened - доступен в мастерской
+        pusrchased - добавлен игроку 
+        -->
+        <reward name="train_1" state="pusrchased"/>
+        <!--в качастве награды дается вагон 
+        opened - доступен в мастерской
+        pusrchased - добавлен игроку 
+        -->
+        <reward name="carriage_1" state="opened"/>
+        <!--в качастве награды дается ресурсы 
+        amount - количество ресурсов
+        -->
+        <reward name="resources" amount="10"/>
+      </rewards>
+      <!--
+      Условия которые должны быть выполнены для появления мисии
+      -->
+      <conditions>
+        <!--терменал к которому должен быть доступ-->
+        <condition name ="terminal_1" state="pusrchased"/>
+        <!--поезд который должен быть куплен или открыт в доступе-->
+        <condition name="train_1" state="opened"/>
+        <!--поезд который должен быть куплен или открыт в доступе-->
+        <condition name="carriage" state="opened"/>
+        <!--миссия которая должна иметь след статус доступна, пройдена-->
+        <condition name="missionid" state="passed"/>
+        <!--миссия жд дороги которая должа быть доступна игроку и пройдена passedAmount раз-->
+        <condition name="railway" passedAmount="2"/>
+      </conditions>
+      <!--
+      Условия которые должны быть выполнены для выполнения мисии 
+      -->
+      <tasks>
+        <!--терменал к которому должен быть доступ-->
+        <task name ="terminal_1"/>
+        <!--поезд который должен быть куплен или открыт в доступе-->
+        <task name="train_1" state="pusrchased"/>
+        <!--вагон который должен быть куплен в доступе-->
+        <task name="carriage" state="pusrchased"/>
+        <!--миссия которая должна иметь след статус доступна, пройдена-->
+        <task name="mission_1" state="passed"/>
+        <!--жд дорога которая должа быть доступна игроку и пройдена passedAmount раз-->
+        <task name="railway" passedAmount="2"/>
+      </tasks>
+    </element>
+    <element name="mission_1">
+      <rewards>
+        <reward name="resources" amount="10"/>
+      </rewards>
+      <conditions>
+        <!--поезд который должен быть куплен или открыт в доступе-->
+        <condition name="train_1" state="opened"/>
+      </conditions>
+      <tasks>
+        <task name ="terminal_1"/>
+      </tasks>
+    </element>
+  </elementList>
+ </data> 

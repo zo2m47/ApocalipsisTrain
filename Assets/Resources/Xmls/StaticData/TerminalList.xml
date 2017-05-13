@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+  <!--List of static data terminal-->
+  <elementList>
+    <!--
+    name - уникальный id 
+    location - название локацие где он рапаложен
+    view - название картинки, назвние обьекта к которому стоит привезать координаты данного терминала
+    -->
+    <element name ="terminal_1" location="location_1" view="Terminal_1">
+    </element>
+  </elementList>
+ </data> 

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+  <!--
+  List of Trains static data 
+  -->
+  <elementList>
+    <!--
+    name  - уникальное название поезда 
+    strength - количество жизней поезда 
+    engine - мощность поезда сколько едениц веса поезд пожет потянуть 
+    view - имя картинки ну или префаба поезда 
+    -->
+    <element name="train_1" strength="20" engine="10" view="Train_1">
+      <!--
+     cost - стоимость поезда в магазе 
+     resources - сколько ресурсов требуется для разработки этого поезда 
+     -->
+      <market resources="20"/>
+
+      <!--
+      описания коробки передач поезда 
+      index  - номер передачи 
+      speed - скорость с какой поезд движится на этой передачи 
+      change - требуемое время для смены скорости 
+      -->
+      <transmissions>
+        <transmission index="1" speed="2" change="1"/>
+        <transmission index="2" speed="4" change="1"/>
+        <transmission index="3" speed="6" change="1"/>
+      </transmissions>
+      <!--
+      описание оружия 
+      power - сила урона от попадания пули 
+      cooldown - время задержки между выстрелами  
+      cartridge - количество выстрелов перед зарядкой оружия 
+      reloading - время перезарядки оружия 
+      -->
+      <weapon power="2" cooldown="2" cartridge="20" reloading="1"/>
+    </element>
+    <element name="train_2" strength="20" engine="10" view="Train_1">
+      <market cost="100" resources="20" availability="1" terminal="terminal_1"/>
+      <transmissions>
+        <transmission index="1" speed="2" change="1"/>
+        <transmission index="2" speed="4" change="1"/>
+        <transmission index="3" speed="6" change="1"/>
+      </transmissions>
+      <weapon power="2" cooldown="2" cartridge="20" reloading="1"/>
+    </element>
+  </elementList>
+ </data> 
