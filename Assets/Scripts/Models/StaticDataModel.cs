@@ -119,6 +119,26 @@ public class StaticDataModel : ModelSingleTone<StaticDataModel>,IInitilizationPr
         }
         return _allStaticData[type];
     }
+
+    /// <summary>
+    /// Get carriage by id
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public CarriageVO GetCarriage(string name)
+    {
+        return (CarriageVO)_allStaticData[EnumStaticDataType.carriage].GetDataById(name);
+    }
+
+    /// <summary>
+    /// Get train data by id
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public TrainVO GetTrain(string name)
+    {
+        return (TrainVO)_allStaticData[EnumStaticDataType.train].GetDataById(name);
+    }
 }
 /**
  * Class just for initialization list 

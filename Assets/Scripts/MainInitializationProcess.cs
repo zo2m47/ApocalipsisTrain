@@ -26,7 +26,7 @@ public class MainInitializationProcess : SingletonMonoBehaviour<MainInitializati
         _initializationList.Add(UIScreenAnimationManager.Instance);
         _initializationList.Add(StaticDataModel.Instance);
         _initializationList.Add(TimerManager.Instance);
-        
+        _initializationList.Add(GameViewManager.Instance);
         StartInitialization();
     }
 
