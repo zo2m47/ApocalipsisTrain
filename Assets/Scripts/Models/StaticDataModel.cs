@@ -31,7 +31,7 @@ public class StaticDataModel : ModelSingleTone<StaticDataModel>,IInitilizationPr
         }
     }
 
-    public string classNameInInitialization
+    public string ClassNameInInitialization
     {
         get
         {
@@ -169,11 +169,11 @@ class Collection : IInitilizationProcess
         }
     }
 
-    public string classNameInInitialization
+    public string ClassNameInInitialization
     {
         get
         {
-           return _collectionOfData.classNameInInitialization;
+           return _collectionOfData.ClassNameInInitialization;
         }
     }
 

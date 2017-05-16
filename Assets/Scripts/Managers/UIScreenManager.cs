@@ -17,7 +17,7 @@ public class UIScreenManager : ManagerSingleTone<UIScreenManager>,IInitilization
     public bool allInitializated { get { return _initializationStatus == EnumInitializationStatus.initializated; } }
     public EnumInitializationStatus initializationStatus { get { return _initializationStatus; } }
 
-    public string classNameInInitialization { get { return "Screen Manager"; } }
+    public string ClassNameInInitialization { get { return "Screen Manager"; } }
 
     private List<IUIScreenNavigationController> _screenStack = new List<IUIScreenNavigationController>();
     private EnumUIScreenID _finishScreen; //for navigation
@@ -29,7 +29,8 @@ public class UIScreenManager : ManagerSingleTone<UIScreenManager>,IInitilization
     private Dictionary<EnumUIScreenID,string> GetScreenList()
     {
         Dictionary<EnumUIScreenID, string> screenList = new Dictionary<EnumUIScreenID, string>();
-        //screenList.Add(EnumUIScreenID.main, PrefabsURL.MAIN_SCREEN);
+        screenList.Add(EnumUIScreenID.main, PrefabsURL.MAIN_SCREEN);
+        screenList.Add(EnumUIScreenID.gamePlay, PrefabsURL.GAME_PLAY_SCREEN);
         return screenList;
     }
 
@@ -61,13 +62,39 @@ public class UIScreenManager : ManagerSingleTone<UIScreenManager>,IInitilization
             }
         }
 
-        if (MainInitializationProcess.Instance.FirstScreen!=EnumUIScreenID.withOutName)
+        StartCoroutine(CheckOfInitializateAllScreens());
+       
+    }
+
+    private IEnumerator CheckOfInitializateAllScreens()
+    {
+        while (true)
         {
-            ShowScreenByID(MainInitializationProcess.Instance.FirstScreen);
-        } else
-        {
+            foreach (IInitilizationProcess pair in _uiScreens.Values)
+            {
+                if (pair.initializationStatus == EnumInitializationStatus.initializationError)
+                {
+                    LoggingManager.AddErrorToLog("Problem with "+ pair.ClassNameInInitialization);
+                    _initializationStatus = EnumInitializationStatus.initializationError;
+                    yield break;
+                }
+
+                if (!pair.allInitializated)
+                {
+                    yield return null;
+                }
+            }
+
+            if (MainInitializationProcess.Instance.FirstScreen != EnumUIScreenID.withOutName)
+            {
+                ShowScreenByID(MainInitializationProcess.Instance.FirstScreen);
+            }
+
             _initializationStatus = EnumInitializationStatus.initializated;
+            yield break;
+
         }
+        yield break;
     }
 
     /*Logic */

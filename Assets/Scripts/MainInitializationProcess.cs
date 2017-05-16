@@ -27,6 +27,7 @@ public class MainInitializationProcess : SingletonMonoBehaviour<MainInitializati
         _initializationList.Add(StaticDataModel.Instance);
         _initializationList.Add(TimerManager.Instance);
         _initializationList.Add(GameViewManager.Instance);
+        _initializationList.Add(GamePlayModel.Instance);
         StartInitialization();
     }
 
@@ -46,13 +47,17 @@ public class MainInitializationProcess : SingletonMonoBehaviour<MainInitializati
     {
         while (!allInitializated)
         {
-            LoggingManager.Instance.AddLog("-------INITIALIZATION TRACE-------");
             foreach (IInitilizationProcess initilizationClass in _initializationList)
             {
                 if (initilizationClass.initializationStatus == EnumInitializationStatus.initializationError)
                 {
-                    LoggingManager.AddErrorToLog(string.Format("InitializationError in {0}", initilizationClass.classNameInInitialization));
+                    LoggingManager.AddErrorToLog(string.Format("InitializationError in {0}", initilizationClass.ClassNameInInitialization));
                     yield break;
+                }
+
+                if (initilizationClass.initializationStatus == EnumInitializationStatus.inProgress)
+                {
+                    LoggingManager.Log(string.Format("WAIT OF in {0}", initilizationClass.ClassNameInInitialization));
                 }
 
             }

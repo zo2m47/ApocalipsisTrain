@@ -23,7 +23,7 @@ public class UIScreenAnimationManager : ManagerSingleTone<UIScreenAnimationManag
     private EnumInitializationStatus _initializationStatus;
     public EnumInitializationStatus initializationStatus { get { return _initializationStatus; } }
     public bool allInitializated { get { return _initializationStatus == EnumInitializationStatus.initializated; }}
-    public string classNameInInitialization { get { return "Screen animations"; } }
+    public string ClassNameInInitialization { get { return "Screen animations"; } }
     public void StartInitialization()
     {
         _initializationStatus = EnumInitializationStatus.inProgress;

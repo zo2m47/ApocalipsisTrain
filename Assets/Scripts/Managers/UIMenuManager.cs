@@ -12,7 +12,7 @@ public class UIMenuManager : ManagerSingleTone<UIMenuManager>, IInitilizationPro
     private EnumInitializationStatus _initializationStatus = EnumInitializationStatus.waiting;
     public bool allInitializated { get { return _initializationStatus == EnumInitializationStatus.initializated; } }
     public EnumInitializationStatus initializationStatus { get { return _initializationStatus; } }
-    public string classNameInInitialization { get { return "Menu"; } }
+    public string ClassNameInInitialization { get { return "Menu"; } }
     
     /*Initialization
      * */

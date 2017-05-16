@@ -6,6 +6,6 @@ interface IInitilizationProcess
     EnumInitializationStatus initializationStatus { get; }
     void StartInitialization(); //start initialization 
     bool allInitializated { get; } //cheking on all initialization
-    string classNameInInitialization { get; }
+    string ClassNameInInitialization { get; }
 }
 

@@ -14,7 +14,7 @@ public class TimerManager : ManagerSingleTone<TimerManager>, IInitilizationProce
      * */
     private EnumInitializationStatus _initializationStatus;
     public EnumInitializationStatus initializationStatus { get { return _initializationStatus; } }
-    public string classNameInInitialization { get { return "Timer"; } }
+    public string ClassNameInInitialization { get { return "Timer"; } }
     public bool allInitializated { get { return _initializationStatus == EnumInitializationStatus.initializated; } }
 
     public void StartInitialization()

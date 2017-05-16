@@ -7,6 +7,8 @@ using UnityEngine;
 public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizationProcess
 {
     private GameObject _container;
+    private TrainGameViewManager _trainGameViewManager;
+
     /**
      * Initializaiotn process 
      * */
@@ -15,11 +17,11 @@ public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizatio
     {
         get
         {
-            return _initializationStatis == EnumInitializationStatus.initializated;
+            return _initializationStatus == EnumInitializationStatus.initializated;
         }
     }
 
-    public string classNameInInitialization
+    public string ClassNameInInitialization
     {
         get
         {
@@ -31,7 +33,7 @@ public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizatio
     {
         get
         {
-            return _initializationStatis;
+            return _initializationStatus;
         }
     }
 
@@ -45,6 +47,17 @@ public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizatio
             _initializationStatus = EnumInitializationStatus.initializationError;
             return;
         }
+
+        //creat prefab with train game view manager for view train 
+        _trainGameViewManager = PrefabCreatorManager.Instance.InstanceComponent<TrainGameViewManager>(PrefabsURL.TRAIN_GAME_VIEW, _container);
+
         _initializationStatus = EnumInitializationStatus.initializated;
+    }
+    /***
+     * Logic of manager 
+     * */
+    public void ShowGamePlayView()
+    {
+        _trainGameViewManager.Init();
     }
 }

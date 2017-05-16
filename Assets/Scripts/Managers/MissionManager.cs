@@ -19,7 +19,7 @@ public class MissionManager : ManagerSingleTone<MissionManager>, IInitilizationP
         }
     }
 
-    public string classNameInInitialization
+    public string ClassNameInInitialization
     {
         get
         {

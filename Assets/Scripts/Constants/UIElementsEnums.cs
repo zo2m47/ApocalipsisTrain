@@ -2,7 +2,9 @@
 //UIScreen id
 public enum EnumUIScreenID
 {
-    withOutName
+    withOutName,
+    gamePlay,
+    main
 }
 
 //UIMenu id

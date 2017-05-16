@@ -35,7 +35,7 @@ public class CollectionOfData:IInitilizationProcess
         }
     }
 
-    public string classNameInInitialization
+    public string ClassNameInInitialization
     {
         get
         {
