@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizationProcess
 {
     private GameObject _container;
-    private TrainGameViewManager _trainGameViewManager;
+    private LocomotiveViewManager _locomotiveViewManager;
 
     /**
      * Initializaiotn process 
@@ -49,7 +49,7 @@ public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizatio
         }
 
         //creat prefab with train game view manager for view train 
-        _trainGameViewManager = PrefabCreatorManager.Instance.InstanceComponent<TrainGameViewManager>(PrefabsURL.TRAIN_GAME_VIEW, _container);
+        _locomotiveViewManager = PrefabCreatorManager.Instance.InstanceComponent<LocomotiveViewManager>(PrefabsURL.LOCOMOTIVE_GAME_VIEW, _container);
 
         _initializationStatus = EnumInitializationStatus.initializated;
     }
@@ -58,6 +58,6 @@ public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizatio
      * */
     public void ShowGamePlayView()
     {
-        _trainGameViewManager.Init();
+        _locomotiveViewManager.Init();
     }
 }

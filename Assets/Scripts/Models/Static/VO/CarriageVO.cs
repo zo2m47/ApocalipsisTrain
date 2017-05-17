@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml.Serialization;
 
-public class CarriageVO : DataVO
+public class CarriageVO : DataVO,IGameElement
 {
     public override EnumStaticDataType Type
     {
@@ -12,6 +12,7 @@ public class CarriageVO : DataVO
             return EnumStaticDataType.carriage;
         }
     }
+
 
     [XmlAttribute("strength")]
     public int strength = 0;
@@ -30,5 +31,13 @@ public class CarriageVO : DataVO
 
     [XmlElement("market")]
     public MarketData market;
+
+    public string PrefabUrl
+    {
+        get
+        {
+            return PrefabsURL.CARRIAGES_GAME_ELEMENT+view;
+        }
+    }
 
 }

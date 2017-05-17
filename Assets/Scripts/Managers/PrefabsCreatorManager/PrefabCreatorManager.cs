@@ -1,6 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+public enum EnumPositioning
+{
+    withOut,
+    local,
+    global
+}
 public class PrefabCreatorManager : ManagerSingleTone<PrefabCreatorManager>
 {
     private Dictionary<RecycleGameObjectManager, ObjectPoolManager> _pools = new Dictionary<RecycleGameObjectManager, ObjectPoolManager>();
@@ -9,7 +14,7 @@ public class PrefabCreatorManager : ManagerSingleTone<PrefabCreatorManager>
     private Dictionary<string, GameObject> _loadedGameObjectsPool = new Dictionary<string, GameObject>();
 
     //creat prefab 
-    public GameObject InstanceOfPrefab(string prefabUrl, GameObject container = null, bool withPositionSetter = true, Vector3 pos = default(Vector3))
+    public GameObject InstanceOfPrefab(string prefabUrl, GameObject container = null, EnumPositioning positioning = EnumPositioning.withOut, Vector3 pos = default(Vector3))
     {
         //try to load prefab from resources folder 
         if (!_loadedGameObjectsPool.ContainsKey(prefabUrl))
@@ -43,9 +48,16 @@ public class PrefabCreatorManager : ManagerSingleTone<PrefabCreatorManager>
             //add prefab to container
             instance.transform.SetParent(container.transform);
         }
-        if (withPositionSetter)
+        if (positioning != EnumPositioning.withOut)
         {
-            instance.transform.position = pos;
+            if (positioning == EnumPositioning.local)
+            {
+                instance.transform.localPosition = pos;
+            }
+            if (positioning == EnumPositioning.global)
+            {
+                instance.transform.position = pos;
+            }
         }
         return instance;
     }
@@ -95,9 +107,9 @@ public class PrefabCreatorManager : ManagerSingleTone<PrefabCreatorManager>
     }
 
     //return component from created prefab 
-    public CMP InstanceComponent<CMP>(string prefabUrl, GameObject container = null, bool withPositionSetter = true, Vector3 pos = default(Vector3)) where CMP : class
+    public CMP InstanceComponent<CMP>(string prefabUrl, GameObject container = null, EnumPositioning positioning = EnumPositioning.withOut, Vector3 pos = default(Vector3)) where CMP : class
     {
-        CMP returnClass = InstanceOfPrefab(prefabUrl, container, withPositionSetter,pos).GetComponent(typeof(CMP)) as CMP;
+        CMP returnClass = InstanceOfPrefab(prefabUrl, container, positioning, pos).GetComponent(typeof(CMP)) as CMP;
         if (returnClass == null)
         {
             LoggingManager.AddErrorToLog("Didnt found component " + typeof(CMP) + " in prefab " + prefabUrl);

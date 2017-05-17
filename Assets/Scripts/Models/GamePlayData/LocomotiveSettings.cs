@@ -4,7 +4,7 @@ using UnityEngine;
 /**
  * Settings of train before game 
  * */
-public class TrainInGame
+public class LocomotiveSettings
 {
     private TrainVO _train;
     public TrainVO Train { get { return _train; } }

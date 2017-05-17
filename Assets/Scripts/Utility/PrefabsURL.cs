@@ -17,13 +17,17 @@ public static class PrefabsURL
     private const string MENU_FOLDER = "Menu/";
     private const string CONTENT_FOLDER = "Content/";
     private const string GAME_VIEW_FOLDER = "GameView/";
-    
+    private const string TRAINS = "Trains/";
+    private const string CARRIAGES = "Carriages/";
+
     //screens prefab
     public const string MAIN_SCREEN = BASE_FOLDER + SCREENS_FOLDER + "MainScreen";
     public const string GAME_PLAY_SCREEN = BASE_FOLDER + SCREENS_FOLDER + "GamePlayScreen";
     //Ggame view prefabs 
-    public const string TRAIN_GAME_VIEW = BASE_FOLDER + GAME_VIEW_FOLDER + "TrainGameView";
-
+    public const string LOCOMOTIVE_GAME_VIEW = BASE_FOLDER + GAME_VIEW_FOLDER + "LocomotiveView";
+    //Game Elemnts 
+    public const string TRAIN_GAME_ELEMENT = BASE_FOLDER + GAME_VIEW_FOLDER + TRAINS;
+    public const string CARRIAGES_GAME_ELEMENT = BASE_FOLDER + GAME_VIEW_FOLDER + CARRIAGES;
     //screens menu 
     public const string HEAD_MENU = BASE_FOLDER + MENU_FOLDER + "HeadMenu";
     

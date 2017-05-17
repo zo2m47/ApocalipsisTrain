@@ -1,14 +1,4 @@
-﻿//  ***************************************************************************
-//  GamePlayModel.cs
-//      
-//  Copyright (c) 2017  Spina LLC
-//  All rights reserved.
-//
-//  This software may not be copied, distributed or modified
-//  without express permission of Spina LLC.  
-//  The software is provided as is, in accordance with the license agreement.
-//  ****************************************************************************
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +8,14 @@ using System.Text;
  * */
 public class GamePlayModel : ModelSingleTone<GamePlayModel>, IInitilizationProcess
 {
-    private TrainInGame _trainPrepareSetings = new TrainInGame();
+    private LocomotiveSettings _locomotiveSettings = new LocomotiveSettings();
+    public LocomotiveSettings LocomotiveSettings
+    {
+        get
+        {
+            return _locomotiveSettings;
+        }
+    }
     /**
      * Initialization logic 
      * */
@@ -57,7 +54,7 @@ public class GamePlayModel : ModelSingleTone<GamePlayModel>, IInitilizationProce
      * */
     public void PrepareTrain()
     {
-        _trainPrepareSetings.AddCarriage("carriage_1");
-        _trainPrepareSetings.SelectTrain("train_1");
+        _locomotiveSettings.AddCarriage("carriage_1");
+        _locomotiveSettings.SelectTrain("train_1");
     }
 }

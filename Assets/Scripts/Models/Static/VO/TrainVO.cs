@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-public class TrainVO : DataVO
+public class TrainVO : DataVO, IGameElement
 {
     [XmlAttribute("strength")]
     public int strength = 0;
@@ -22,4 +22,12 @@ public class TrainVO : DataVO
 
     [XmlElement("weapon")]
     public WeaponData weapon;
+
+    public string PrefabUrl
+    {
+        get
+        {
+            return PrefabsURL.TRAIN_GAME_ELEMENT + view;
+        }
+    }
 }
