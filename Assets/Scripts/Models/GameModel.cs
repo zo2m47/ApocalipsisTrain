@@ -6,7 +6,7 @@ using System.Text;
 /***
  * Logic of player data in game, data of prepering for game, game play progress  
  * */
-public class GamePlayModel : ModelSingleTone<GamePlayModel>, IInitilizationProcess
+public class GameModel : ModelSingleTone<GameModel>, IInitilizationProcess
 {
     private LocomotiveSettings _locomotiveSettings = new LocomotiveSettings();
     public LocomotiveSettings LocomotiveSettings

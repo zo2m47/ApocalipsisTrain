@@ -10,6 +10,7 @@ public class MonoBehaviourForSingleTone : MonoBehaviour
 
     protected const string MANAGER_OBJECT_NAME = "ManagerSingleToneScripts";
     protected const string MODEL_OBJECT_NAME = "ModelSingleToneScripts";
+    protected const string CONTROLLER_OBJECT_NAME = "ControllerSingleToneScripts";
 
     private static GameObject _s_mainScriptsContainer;
     private static Dictionary<string, GameObject> _s_singleToneContainers = new Dictionary<string, GameObject>();

@@ -26,7 +26,7 @@ public class GamePlayScreenController : BaseUIScreenController, IMainScreenDataP
     public override void SetData(object data)
     {
         base.SetData(data);
-        GamePlayModel.Instance.PrepareTrain();
-        GameViewManager.Instance.ShowGamePlayView();
+        MainGameController.Instance.StartGame();
+
     }
 }

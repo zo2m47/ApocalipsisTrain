@@ -55,7 +55,7 @@ public class LocomotiveViewManager : MonoBehaviour
     {
         get
         {
-            return GamePlayModel.Instance.LocomotiveSettings.Train;
+            return GameModel.Instance.LocomotiveSettings.Train;
         }
     }
 
@@ -63,7 +63,7 @@ public class LocomotiveViewManager : MonoBehaviour
     {
         get
         {
-            return GamePlayModel.Instance.LocomotiveSettings.CarriageList;
+            return GameModel.Instance.LocomotiveSettings.CarriageList;
         }
     }
 }

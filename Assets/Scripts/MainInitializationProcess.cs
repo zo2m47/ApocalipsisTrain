@@ -27,7 +27,9 @@ public class MainInitializationProcess : SingletonMonoBehaviour<MainInitializati
         _initializationList.Add(StaticDataModel.Instance);
         _initializationList.Add(TimerManager.Instance);
         _initializationList.Add(GameViewManager.Instance);
-        _initializationList.Add(GamePlayModel.Instance);
+        _initializationList.Add(GameModel.Instance);
+        _initializationList.Add(MainGameController.Instance);
+        _initializationList.Add(MouseInputController.Instance);
         StartInitialization();
     }
 
