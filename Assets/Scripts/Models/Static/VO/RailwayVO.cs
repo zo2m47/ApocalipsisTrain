@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml.Serialization;
 
-public class RailwayVO : DataVO
+public class RailwayVO : DataVO, IMarketData
 {
     public override EnumStaticDataType Type
     {
@@ -24,6 +24,7 @@ public class RailwayVO : DataVO
 
     [XmlElement("market")]
     public MarketData market;
+    public MarketData Market { get { return market; } }
 
     [XmlArray("attackList")]
     [XmlArrayItem("attack")]

@@ -1,6 +1,6 @@
 ﻿public enum EnumComponentEvent
 {
     move,
-    attack,
+    attack,//прицеливание. Когда игрок жмет по 
     collect
 }

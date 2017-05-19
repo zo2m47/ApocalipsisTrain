@@ -5,23 +5,34 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-public class TrainVO : DataVO, IGameElement
+public class TrainVO : DataVO, IGameElement, IMarketData
 {
     [XmlAttribute("strength")]
     public int strength = 0;
+    public int Strength { get { return strength; } }
 
+    [XmlElement("weapon")]
+    public WeaponData weapon;
+    public WeaponData Weapon { get { return weapon; } }
+
+    [XmlElement("storage")]
+    public StorageData storage;
+    public StorageData Storage { get { return storage; } }
+
+    [XmlElement("collector")]
+    public CollectorData collector;
+    public CollectorData Collector { get { return collector; } }
+    
     [XmlAttribute("engine")]
     public int engine = 0;
 
     [XmlElement("market")]
     public MarketData market = null;
+    public MarketData Market { get { return market; } }
 
     [XmlArray("transmissions")]
     [XmlArrayItem("transmission")]
     public List<TransmissionData> transmissionList = new List<TransmissionData>();
-
-    [XmlElement("weapon")]
-    public WeaponData weapon;
 
     public string PrefabUrl
     {

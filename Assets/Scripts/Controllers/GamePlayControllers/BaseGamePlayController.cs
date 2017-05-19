@@ -8,18 +8,49 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
     [SerializeField]
     private GameObject _connector;
     public GameObject Connector { get { return _connector; } }
+
+    private BaseGamePlayComponent[] _components;
+
+    private object _staticData;
+
+    /// <summary>
+    /// work with static data 
+    /// </summary>
+    public virtual object StaticData
+    {
+        set
+        {
+            _staticData = value;
+        }
+        get
+        {
+            return _staticData;
+        }
+    }
+
+    /// <summary>
+    /// return commponents interface 
+    /// </summary>
+    public virtual IComponentData CommponentsData
+    {
+        get
+        {
+            return _staticData as IComponentData;
+        }
+    }
+
     /**
  * Work with events vs commonents and controllers 
  * */
     /*Modifier delegate*/
     //get modified value after modifier it in buffs, calls from components 
-    private Dictionary<EnumModifierAction, List<Func<ModifierActionData>>> _modifierActionDispatcher = new Dictionary<EnumModifierAction, List<Func<ModifierActionData>>>();
+    private Dictionary<EnumModifierAction, List<Action<ModifierActionData>>> _modifierActionDispatcher = new Dictionary<EnumModifierAction, List<Action<ModifierActionData>>>();
     /// <summary>
     /// add listener on modifier porperties
     /// </summary>
     /// <param name="action">name of modifier action</param>
     /// <param name="listener">callback</param>
-    public void AddModifierListener(EnumModifierAction action, Func<ModifierActionData> listener)
+    public void AddModifierListener(EnumModifierAction action, Action<ModifierActionData> listener)
     {
         if (!_modifierActionDispatcher.ContainsKey(action))
         {
@@ -33,7 +64,7 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
     /// </summary>
     /// <param name="action">name of modifier action</param>
     /// <param name="listener">callback</param>
-    public void RemoveModifierListener(EnumModifierAction action, Func<ModifierActionData> listener)
+    public void RemoveModifierListener(EnumModifierAction action, Action<ModifierActionData> listener)
     {
         if (_modifierActionDispatcher.ContainsKey(action))
         {
@@ -64,13 +95,13 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
     }
 
     /*Components events*/
-    private Dictionary<EnumComponentEvent, List<Func<IComponentActionData>>> _commponentActionDispatcher = new Dictionary<EnumComponentEvent, List<Func<IComponentActionData>>>();
+    private Dictionary<EnumComponentEvent, List<Action<IComponentActionData>>> _commponentActionDispatcher = new Dictionary<EnumComponentEvent, List<Action<IComponentActionData>>>();
     /// <summary>
     /// Add listener on actions
     /// </summary>
     /// <param name="action">name of event</param>
     /// <param name="listener">callback</param>
-    public void AddComponentListener(EnumComponentEvent action, Func<IComponentActionData> listener)
+    public void AddComponentListener(EnumComponentEvent action, Action<IComponentActionData> listener)
     {
         if (!_commponentActionDispatcher.ContainsKey(action))
         {
@@ -84,7 +115,7 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
     /// </summary>
     /// <param name="action">name of action</param>
     /// <param name="listener">call back</param>
-    public void RemoveComponentListener(EnumComponentEvent action, Func<IComponentActionData> listener)
+    public void RemoveComponentListener(EnumComponentEvent action, Action<IComponentActionData> listener)
     {
         if (_commponentActionDispatcher.ContainsKey(action))
         {
@@ -117,6 +148,13 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
 
     private void Start()
     {
+        // set static data to 
+        _components = gameObject.GetComponentsInChildren<BaseGamePlayComponent>();
+        for (int i = 0; i < _components.Length; i++)
+        {
+            _components[i].GameElementController = this;
+        }
+
         FirstInit();
     }
 
@@ -124,6 +162,8 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
     {
 
     }
+
+
     /***
      * IRecyle
      * */

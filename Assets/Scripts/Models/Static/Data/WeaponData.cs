@@ -16,4 +16,8 @@ public class WeaponData
 
     [XmlAttribute("reloading")]
     public int reloading = 0;
+
+    [XmlAttribute("aimSpeed")]
+    public int aimSpeed= 0;
+
 }

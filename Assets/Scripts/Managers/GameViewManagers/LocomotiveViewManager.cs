@@ -7,8 +7,8 @@ using UnityEngine;
 public class LocomotiveViewManager : MonoBehaviour
 {
     private GameObject _container;
-    private TrainGameController _trainGameController;
-    private List<CarriageGameController> _carriageList = new List<CarriageGameController>();
+    private TrainGamePlayController _trainGameController;
+    private List<CarriageGamePlayController> _carriageList = new List<CarriageGamePlayController>();
 
     private void Start()
     {
@@ -19,18 +19,18 @@ public class LocomotiveViewManager : MonoBehaviour
     {
         CleanLocomotive();
         //creat instance of train
-        _trainGameController = PrefabCreatorManager.Instance.InstanceComponent<TrainGameController>(TrainStaticData.PrefabUrl, _container);
+        _trainGameController = PrefabCreatorManager.Instance.InstanceComponent<TrainGamePlayController>(TrainStaticData.PrefabUrl, _container);
         //crat instance of carrieages 
-        _carriageList = new List<CarriageGameController>();
+        _carriageList = new List<CarriageGamePlayController>();
         List<CarriageVO> carriageDataList = CarriageStaticDataList;
         for (int i = 0;i< carriageDataList.Count;i++)
         {
             if (i == 0)
             {
-                _carriageList.Add(PrefabCreatorManager.Instance.InstanceComponent<CarriageGameController>(carriageDataList[i].PrefabUrl, _trainGameController.Connector, EnumPositioning.local, new Vector3(0, 0, 0)));
+                _carriageList.Add(PrefabCreatorManager.Instance.InstanceComponent<CarriageGamePlayController>(carriageDataList[i].PrefabUrl, _trainGameController.Connector, EnumPositioning.local, new Vector3(0, 0, 0)));
             } else
             {
-                _carriageList.Add(PrefabCreatorManager.Instance.InstanceComponent<CarriageGameController>(carriageDataList[i].PrefabUrl, _carriageList[_carriageList.Count-1].Connector, EnumPositioning.local, new Vector3(0,0,0)));
+                _carriageList.Add(PrefabCreatorManager.Instance.InstanceComponent<CarriageGamePlayController>(carriageDataList[i].PrefabUrl, _carriageList[_carriageList.Count-1].Connector, EnumPositioning.local, new Vector3(0,0,0)));
             }
         }
     }
