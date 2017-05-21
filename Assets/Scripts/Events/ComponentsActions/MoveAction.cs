@@ -12,4 +12,12 @@ public enum EnumMoveAction
 public class MoveAction : IComponentActionData
 {
     private EnumMoveAction _action;
+
+    public object Data
+    {
+        get
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

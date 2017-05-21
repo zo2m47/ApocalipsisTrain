@@ -54,7 +54,7 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
     {
         if (!_modifierActionDispatcher.ContainsKey(action))
         {
-            _modifierActionDispatcher.Add(action, new List<Func<ModifierActionData>>());
+            _modifierActionDispatcher.Add(action, new List<Action<ModifierActionData>>());
         }
         _modifierActionDispatcher[action].Add(listener);
     }
@@ -105,7 +105,7 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
     {
         if (!_commponentActionDispatcher.ContainsKey(action))
         {
-            _commponentActionDispatcher.Add(action, new List<Func<IComponentActionData>>());
+            _commponentActionDispatcher.Add(action, new List<Action<IComponentActionData>>());
         }
         _commponentActionDispatcher[action].Add(listener);
     }
