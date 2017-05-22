@@ -148,7 +148,7 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
     private void Start()
     {
         // set static data to 
-        _components = gameObject.GetComponentsInChildren<BaseGamePlayComponent>();
+        _components = gameObject.GetComponents<BaseGamePlayComponent>();
         for (int i = 0; i < _components.Length; i++)
         {
             _components[i].GameElementController = this;
@@ -176,6 +176,7 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
      * */
     public virtual void Restart()
     {
+        
         InitiListener();
     }
 

@@ -7,27 +7,19 @@ using System.Collections.Generic;
 public class RecycleGameObjectManager : MonoBehaviour
 {
 
-    private List<IRecyle> recycleComponents;
+    private IRecyle[] _recycleComponents;
 
     void Awake()
     {
         //Get all component who can be Recycle
-        var components = GetComponents<MonoBehaviour>();
-        recycleComponents = new List<IRecyle>();
-        foreach (var component in components)
-        {
-            if (component is IRecyle)
-            {
-                recycleComponents.Add(component as IRecyle);
-            }
-        }
+        _recycleComponents = gameObject.GetComponentsInChildren<IRecyle>();
     }
     //prefab does't destroy it stays activate and call Shutdown all class who implement IRecyle
     public void Restart()
     {
         gameObject.SetActive(true);
 
-        foreach (var component in recycleComponents)
+        foreach (IRecyle component in _recycleComponents)
         {
             component.Restart();
         }
@@ -37,7 +29,7 @@ public class RecycleGameObjectManager : MonoBehaviour
     {
         gameObject.SetActive(false);
 
-        foreach (var component in recycleComponents)
+        foreach (IRecyle component in _recycleComponents)
         {
             component.Shutdown();
         }

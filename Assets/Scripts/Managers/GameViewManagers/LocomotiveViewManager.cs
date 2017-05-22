@@ -20,6 +20,7 @@ public class LocomotiveViewManager : MonoBehaviour
         CleanLocomotive();
         //creat instance of train
         _trainGameController = PrefabCreatorManager.Instance.InstanceComponent<TrainGamePlayController>(TrainStaticData.PrefabUrl, _container);
+        _trainGameController.StaticData = TrainStaticData;
         //crat instance of carrieages 
         _carriageList = new List<CarriageGamePlayController>();
         List<CarriageVO> carriageDataList = CarriageStaticDataList;
@@ -32,6 +33,7 @@ public class LocomotiveViewManager : MonoBehaviour
             {
                 _carriageList.Add(PrefabCreatorManager.Instance.InstanceComponent<CarriageGamePlayController>(carriageDataList[i].PrefabUrl, _carriageList[_carriageList.Count-1].Connector, EnumPositioning.local, new Vector3(0,0,0)));
             }
+            _carriageList[_carriageList.Count - 1].StaticData = carriageDataList[i];
         }
     }
     /// <summary>

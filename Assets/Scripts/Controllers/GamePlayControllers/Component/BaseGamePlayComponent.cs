@@ -17,7 +17,9 @@ using UnityEngine;
 
 public class BaseGamePlayComponent : MonoBehaviour, IRecyle 
 {
-    /// <summary>
+    [SerializeField]
+    protected GameObject _goOfComponent;
+    /// <summary>4
     /// Main Controller of current train prefab
     /// </summary>
     protected BaseGamePlayController _gameElementController;
@@ -27,6 +29,7 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
         set
         {
             _gameElementController = value;
+            InitListener();
         }
     }
     /// <summary>
@@ -59,7 +62,7 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
 
     private void Start()
     {
-        
+        Debug.Log("INIT WEAPON");
     }
     
     /// <summary>
@@ -67,12 +70,12 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
     /// </summary>
     protected virtual void InitListener()
     {
-
+        
     }
 
-    protected virtual void RemoveListener()
+    protected virtual void RemoveAllListener()
     {
-
+        
     }
 
     /**
@@ -80,11 +83,11 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
      * */
     public virtual void Restart()
     {
-        InitListener();
+        
     }
 
     public virtual void Shutdown()
     {
-        RemoveListener();
+        RemoveAllListener();
     }
 }
