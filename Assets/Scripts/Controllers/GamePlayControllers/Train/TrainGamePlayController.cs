@@ -7,16 +7,11 @@ using UnityEngine;
  * */
 public class TrainGamePlayController : BaseGamePlayController
 {
-    public override object StaticData
+    public override IStaticData StaticData
     {
         get
         {
             return base.StaticData as TrainVO;
-        }
-
-        set
-        {
-            base.StaticData = value;
         }
     }
 }

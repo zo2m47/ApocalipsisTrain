@@ -12,21 +12,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using UnityEngine;
 
 public class WeaponComponent : BaseGamePlayComponent
 {
     protected override void InitListener()
     {
+        Debug.Log("InitListener");
         base.InitListener();
-        AddComponentListener(EnumComponentEvent.attack, StartAttack);
+        AddComponentListener(EnumComponentGroupAction.attack, ActionListener);
+    }
+
+    protected override void RemoveListener()
+    {
+        base.RemoveListener();
+        RemoveListener(EnumComponentGroupAction.attack, ActionListener);
     }
 
     /**
      * Listener
      * */
-    private void StartAttack(IComponentActionData componentActionData)
+    private void ActionListener(IComponentAction componentActionData)
     {
+        Debug.Log("ActionListener");
+        if(MainGameController.Instance.SelectedGameElement == StaticName)
+        {
+            AttackComponenAction componentAction = componentActionData as AttackComponenAction;
+            if(componentAction.Action == EnumComponentAction.aim)
+            {
+                LoggingManager.Log("НЕУЖЕЛИ!!!!!!");
+            }
 
+        }
     }
 }

@@ -6,16 +6,11 @@ using UnityEngine;
  * */
 public class CarriageGamePlayController : BaseGamePlayController
 {
-    public override object StaticData
+    public override IStaticData StaticData
     {
         get
         {
             return base.StaticData as CarriageVO; 
-        }
-
-        set
-        {
-            base.StaticData = value;
         }
     }
 }

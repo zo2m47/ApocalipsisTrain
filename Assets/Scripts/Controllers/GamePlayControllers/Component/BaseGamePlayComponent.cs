@@ -29,10 +29,32 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
             _gameElementController = value;
         }
     }
-
-    protected void AddComponentListener(EnumComponentEvent action, Action<IComponentActionData> listener)
+    /// <summary>
+    /// add listernr on element game play controller
+    /// </summary>
+    /// <param name="action">name on action</param>
+    /// <param name="listener">call back</param>
+    protected void AddComponentListener(EnumComponentGroupAction action, Action<IComponentAction> listener)
     {
         _gameElementController.AddComponentListener(action,listener);
+    }
+
+    /// <summary>
+    /// remove listenr form element controller
+    /// </summary>
+    /// <param name="action">name of action</param>
+    /// <param name="listener"></param>
+    protected void RemoveListener(EnumComponentGroupAction action, Action<IComponentAction> listener)
+    {
+        _gameElementController.RemoveComponentListener(action, listener);
+    }
+
+    protected string StaticName
+    {
+        get
+        {
+            return _gameElementController.StaticData.Name;
+        }
     }
 
     private void Start()
@@ -48,6 +70,11 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
 
     }
 
+    protected virtual void RemoveListener()
+    {
+
+    }
+
     /**
      * IRecyle
      * */
@@ -58,6 +85,6 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
 
     public virtual void Shutdown()
     {
-
+        RemoveListener();
     }
 }

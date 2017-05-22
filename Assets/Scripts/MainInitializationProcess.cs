@@ -30,6 +30,7 @@ public class MainInitializationProcess : SingletonMonoBehaviour<MainInitializati
         _initializationList.Add(GameModel.Instance);
         _initializationList.Add(MainGameController.Instance);
         _initializationList.Add(MouseInputController.Instance);
+        _initializationList.Add(ComponentsActionsManager.Instance);
         StartInitialization();
     }
 

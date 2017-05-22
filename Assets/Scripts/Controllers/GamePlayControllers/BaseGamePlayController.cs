@@ -11,12 +11,12 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
 
     private BaseGamePlayComponent[] _components;
 
-    private object _staticData;
+    private IStaticData _staticData;
 
     /// <summary>
     /// work with static data 
     /// </summary>
-    public virtual object StaticData
+    public virtual IStaticData StaticData
     {
         set
         {
@@ -95,35 +95,35 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
     }
 
     /*Components events*/
-    private Dictionary<EnumComponentEvent, List<Action<IComponentActionData>>> _commponentActionDispatcher = new Dictionary<EnumComponentEvent, List<Action<IComponentActionData>>>();
+    private Dictionary<EnumComponentGroupAction, List<Action<IComponentAction>>> _commponentActionDispatcher = new Dictionary<EnumComponentGroupAction, List<Action<IComponentAction>>>();
     /// <summary>
     /// Add listener on actions
     /// </summary>
-    /// <param name="action">name of event</param>
+    /// <param name="componentGroupAction">name of event</param>
     /// <param name="listener">callback</param>
-    public void AddComponentListener(EnumComponentEvent action, Action<IComponentActionData> listener)
+    public void AddComponentListener(EnumComponentGroupAction componentGroupAction, Action<IComponentAction> listener)
     {
-        if (!_commponentActionDispatcher.ContainsKey(action))
+        if (!_commponentActionDispatcher.ContainsKey(componentGroupAction))
         {
-            _commponentActionDispatcher.Add(action, new List<Action<IComponentActionData>>());
+            _commponentActionDispatcher.Add(componentGroupAction, new List<Action<IComponentAction>>());
         }
-        _commponentActionDispatcher[action].Add(listener);
+        _commponentActionDispatcher[componentGroupAction].Add(listener);
     }
 
     /// <summary>
     /// Remove listener of componen action 
     /// </summary>
-    /// <param name="action">name of action</param>
+    /// <param name="componentGroupAction">name of action</param>
     /// <param name="listener">call back</param>
-    public void RemoveComponentListener(EnumComponentEvent action, Action<IComponentActionData> listener)
+    public void RemoveComponentListener(EnumComponentGroupAction componentGroupAction, Action<IComponentAction> listener)
     {
-        if (_commponentActionDispatcher.ContainsKey(action))
+        if (_commponentActionDispatcher.ContainsKey(componentGroupAction))
         {
-            for (int i = 0; i < _commponentActionDispatcher[action].Count; i++)
+            for (int i = 0; i < _commponentActionDispatcher[componentGroupAction].Count; i++)
             {
-                if (_commponentActionDispatcher[action][i] == listener)
+                if (_commponentActionDispatcher[componentGroupAction][i] == listener)
                 {
-                    _commponentActionDispatcher[action].RemoveAt(i);
+                    _commponentActionDispatcher[componentGroupAction].RemoveAt(i);
                 }
             }
         }
@@ -132,15 +132,14 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
     /// <summary>
     /// Dicspatch action 
     /// </summary>
-    /// <param name="action">name of action</param>
-    /// <param name="eventData">data of this action</param>
-    public void CallComponentAction(EnumComponentEvent action, IComponentActionData eventData)
+    /// <param name="componentActionData">data of this action</param>
+    private void CallComponentAction(IComponentAction componentActionData)
     {
-        if (_commponentActionDispatcher.ContainsKey(action))
+        if (_commponentActionDispatcher.ContainsKey(componentActionData.GroupAction))
         {
-            for (int i = 0; i < _commponentActionDispatcher[action].Count; i++)
+            for (int i = 0; i < _commponentActionDispatcher[componentActionData.GroupAction].Count; i++)
             {
-                _commponentActionDispatcher[action][i].DynamicInvoke(eventData);
+                _commponentActionDispatcher[componentActionData.GroupAction][i].DynamicInvoke(componentActionData);
             }
         }
     }
@@ -163,17 +162,25 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
 
     }
 
+    protected void InitiListener()
+    {
+        ComponentsActionsManager.Instance.componentActionDispatcher += CallComponentAction;
+    }
 
+    protected void RemoveListener()
+    {
+        ComponentsActionsManager.Instance.componentActionDispatcher -= CallComponentAction;
+    }
     /***
      * IRecyle
      * */
     public virtual void Restart()
     {
-        
+        InitiListener();
     }
 
     public virtual void Shutdown()
     {
-
+        RemoveListener();
     }
 }

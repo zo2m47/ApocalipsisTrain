@@ -44,7 +44,7 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
     public delegate void ChangeEmptyDelegate();
     public ChangeEmptyDelegate changeFlowStateDispatcher;
     //
-    private EnumGameFlowState _gameFlowState;
+    private EnumGameFlowState _gameFlowState = EnumGameFlowState.gamePlay;
     /// <summary>
     /// Dispatch event when game controller change game flow state
     /// </summary>
@@ -65,7 +65,8 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
     public delegate void SelectGamePlayElement();
     public SelectGamePlayElement selectGamePlayElementDispatcher;
 
-    private string _selectedGameElement;
+    private string _selectedGameElement = "carriage_1";
+    public string SelectedGameElement { get { return _selectedGameElement; } }
     /// <summary>
     /// Select game element in game word by user 
     /// </summary>
@@ -95,17 +96,17 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
     // controll of touch in game 
     //cpmmponents add listener to this event, if it need 
     public delegate void GamePlayWordTouchDispatcher(Vector3 touchPosition);
-    public GamePlayWordTouchDispatcher gamePlayWordTouchDispatcher;
+    public GamePlayWordTouchDispatcher gamePlaywordTouchDispatcher;
 
     /// <summary>
     /// Word click
     /// </summary>
     /// <param name="position">position of click in word</param>
-    public void TouchCordinat(Vector3 position)
+    public void WordTouchCordinat(Vector3 position)
     {
-        if(gamePlayWordTouchDispatcher!=null && _gameFlowState == EnumGameFlowState.gamePlay)
+        if(gamePlaywordTouchDispatcher!=null && _gameFlowState == EnumGameFlowState.gamePlay)
         {
-            gamePlayWordTouchDispatcher(position);
+            gamePlaywordTouchDispatcher(position);
         }
     }
 }

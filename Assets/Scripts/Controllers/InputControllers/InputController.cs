@@ -63,7 +63,7 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
     }
 
     //take touch position, after touch started, call frome child
-    protected void TouchedInPosition(Vector3 startPosition)
+    public void TouchedInPosition(Vector3 startPosition)
     {
         if (_touched)
         {
@@ -76,7 +76,7 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
     }
 
     //stop touched, call frome child   
-    protected void StopTouched()
+    public void StopTouched()
     {
         if (_touched)
         {
@@ -127,7 +127,7 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
         _touchCommand = null;
     }
     //call by child ever Frame in childe update function
-    protected void ChekOnTouching(Vector3 newPosition)
+    public void ChekOnTouching(Vector3 newPosition)
     {
         if (_touched)
         {
@@ -172,7 +172,7 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
         //Just for current game
         else
         {
-            MainGameController.Instance.TouchCordinat(_newTouchPosition);
+            MainGameController.Instance.WordTouchCordinat(_newTouchPosition);
         }
     }
 
