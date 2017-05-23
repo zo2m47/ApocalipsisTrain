@@ -9,15 +9,17 @@ public class WeaponData
     public int power = 0;
 
     [XmlAttribute("cooldown")]
-    public int cooldown = 0;
+    public float cooldown = 0;
 
     [XmlAttribute("cartridge")]
     public int cartridge = 0;
 
     [XmlAttribute("reloading")]
-    public int reloading = 0;
+    public float reloading = 0;
 
     [XmlAttribute("aimSpeed")]
-    public int aimSpeed= 0;
+    public float aimSpeed= 0;
 
+    [XmlAttribute("bulletView")]
+    public string bulletView = "";
 }

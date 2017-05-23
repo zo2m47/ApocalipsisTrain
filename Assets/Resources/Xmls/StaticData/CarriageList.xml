@@ -18,7 +18,7 @@
       cartridge - количество выстрелов перед зарядкой оружия 
       reloading - время перезарядки оружия 
       -->
-      <weapon power="2" cooldown="2" cartridge="20" reloading="1"/>
+      <weapon power="2" cooldown="0.5" cartridge="20" reloading="1" aimSpeed="0.2" bulletView="Bullet_1"/>
       <!--
       описание свойства хранилища. Если есть это свойство, то вагон может вести количество ресурсов 
       amount - вместимость 

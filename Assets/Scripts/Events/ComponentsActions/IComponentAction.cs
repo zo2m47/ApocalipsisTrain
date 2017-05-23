@@ -17,5 +17,4 @@ public interface IComponentAction
 {
     EnumComponentAction Action { get; }
     EnumComponentGroupAction GroupAction { get; }
-    object Data { get; }
 }

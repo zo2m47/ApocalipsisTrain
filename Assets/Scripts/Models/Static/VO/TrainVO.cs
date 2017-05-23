@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-public class TrainVO : DataVO, IGameElement, IMarketData
+public class TrainVO : DataVO, IGameElement, IMarketData, IComponentData
 {
     [XmlAttribute("strength")]
     public int strength = 0;

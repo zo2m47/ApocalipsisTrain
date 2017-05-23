@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public class AttackComponenAction : IComponentAction
 {
@@ -13,16 +14,6 @@ public class AttackComponenAction : IComponentAction
             return _action;
         }
     }
-
-    private object _data;
-    public object Data
-    {
-        get
-        {
-            return _data;
-        }
-    }
-
     public EnumComponentGroupAction GroupAction
     {
         get
@@ -31,9 +22,13 @@ public class AttackComponenAction : IComponentAction
         }
     }
 
-    public AttackComponenAction(EnumComponentAction action, object data)
+    //position in the world 
+    private Vector3 _wordTouchedPosition;
+    public Vector3 WordTouchedPosition{get{ return _wordTouchedPosition; }}
+
+    public AttackComponenAction(EnumComponentAction action, Vector3 wordTouchedPosition)
     {
         _action = action;
-        _data = data;
+        _wordTouchedPosition = wordTouchedPosition;
     }
 }

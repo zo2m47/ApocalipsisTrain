@@ -51,7 +51,9 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
     {
         _gameElementController.RemoveComponentListener(action, listener);
     }
-
+    /// <summary>
+    /// Name of static data element
+    /// </summary>
     protected string StaticName
     {
         get
@@ -59,10 +61,12 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
             return _gameElementController.StaticData.Name;
         }
     }
+    
+    protected IComponentData ComponentData { get { return _gameElementController.StaticData as IComponentData; } }
 
     private void Start()
     {
-        Debug.Log("INIT WEAPON");
+        
     }
     
     /// <summary>
@@ -72,7 +76,9 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
     {
         
     }
-
+    /// <summary>
+    /// Remove delegate listener 
+    /// </summary>
     protected virtual void RemoveAllListener()
     {
         

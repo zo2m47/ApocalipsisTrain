@@ -19,6 +19,7 @@ public static class PrefabsURL
     private const string GAME_VIEW_FOLDER = "GameView/";
     private const string TRAINS = "Trains/";
     private const string CARRIAGES = "Carriages/";
+    private const string BULLETS = "Bullets/";
 
     //screens prefab
     public const string MAIN_SCREEN = BASE_FOLDER + SCREENS_FOLDER + "MainScreen";
@@ -28,6 +29,7 @@ public static class PrefabsURL
     //Game Elemnts 
     public const string TRAIN_GAME_ELEMENT = BASE_FOLDER + GAME_VIEW_FOLDER + TRAINS;
     public const string CARRIAGES_GAME_ELEMENT = BASE_FOLDER + GAME_VIEW_FOLDER + CARRIAGES;
+    public const string BULLET_GAME_ELEMENT = BASE_FOLDER + GAME_VIEW_FOLDER + BULLETS;
     //screens menu 
     public const string HEAD_MENU = BASE_FOLDER + MENU_FOLDER + "HeadMenu";
     

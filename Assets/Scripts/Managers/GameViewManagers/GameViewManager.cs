@@ -7,6 +7,8 @@ using UnityEngine;
 public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizationProcess
 {
     private GameObject _container;
+    public GameObject Container { get { return _container; } }
+
     private LocomotiveViewManager _locomotiveViewManager;
 
     /**
