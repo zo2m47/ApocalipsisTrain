@@ -8,7 +8,7 @@ public enum EnumPositioning
 }
 public class PrefabCreatorManager : ManagerSingleTone<PrefabCreatorManager>
 {
-    private Dictionary<RecycleGameObjectManager, ObjectPoolManager> _pools = new Dictionary<RecycleGameObjectManager, ObjectPoolManager>();
+    private Dictionary<string, ObjectPoolManager> _pools = new Dictionary<string, ObjectPoolManager>();
     private GameObject _gameObjectsPool;
 
     private Dictionary<string, GameObject> _loadedGameObjectsPool = new Dictionary<string, GameObject>();
@@ -66,9 +66,9 @@ public class PrefabCreatorManager : ManagerSingleTone<PrefabCreatorManager>
     {
         ObjectPoolManager pool = null;
 
-        if (_pools.ContainsKey(reference))
+        if (_pools.ContainsKey(reference.gameObject.name))
         {
-            pool = _pools[reference];
+            pool = _pools[reference.gameObject.name];
         }
         else
         {
@@ -81,7 +81,7 @@ public class PrefabCreatorManager : ManagerSingleTone<PrefabCreatorManager>
             poolContainer.transform.parent = _gameObjectsPool.transform;
             pool = poolContainer.AddComponent<ObjectPoolManager>();
             pool.prefab = reference;
-            _pools.Add(reference, pool);
+            _pools.Add(reference.gameObject.name, pool);
         }
 
         return pool;

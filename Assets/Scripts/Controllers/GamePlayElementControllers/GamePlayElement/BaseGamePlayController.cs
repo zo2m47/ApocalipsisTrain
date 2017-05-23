@@ -21,10 +21,23 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
         set
         {
             _staticData = value;
+            UpdateStaticData();
         }
         get
         {
             return _staticData;
+        }
+    }
+
+    private void UpdateStaticData()
+    {
+        if(_components == null)
+        {
+            return;
+        }
+        foreach (BaseGamePlayComponent com in _components)
+        {
+            com.UpdateStaticData();
         }
     }
 
@@ -159,7 +172,7 @@ public class BaseGamePlayController : MonoBehaviour, IRecyle
 
     protected virtual void FirstInit()
     {
-
+        UpdateStaticData();
     }
 
     protected void InitiListener()

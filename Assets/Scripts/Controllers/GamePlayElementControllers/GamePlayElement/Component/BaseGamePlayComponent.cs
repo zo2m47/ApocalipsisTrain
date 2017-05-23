@@ -29,8 +29,16 @@ public class BaseGamePlayComponent : MonoBehaviour, IRecyle
         set
         {
             _gameElementController = value;
-            InitListener();
+        
         }
+    }
+
+    /// <summary>
+    /// called from element controller when static data is updated 
+    /// </summary>
+    public void UpdateStaticData()
+    {
+        InitListener();
     }
     /// <summary>
     /// add listernr on element game play controller

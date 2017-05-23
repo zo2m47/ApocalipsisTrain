@@ -32,7 +32,10 @@ public class WeaponComponent : BaseGamePlayComponent
     {
         _readyToShot = true;
     }
-    
+
+    /**
+     * Listener 
+     * */
     protected override void InitListener()
     {
         base.InitListener();
@@ -66,16 +69,18 @@ public class WeaponComponent : BaseGamePlayComponent
      */
     private Quaternion _aimingAnlge;
     private float _aimingSpeed = 0;
+    private float _rotationTime = 0f;
+    private Quaternion _startRotation;
     private void StartAiming()
     {
         _aimingAnlge = Quaternion.LookRotation(Vector3.forward, _attackComponenAction.WordTouchedPosition - _goOfComponent.transform.position);
         var angle = Quaternion.Angle(_goOfComponent.transform.rotation,_aimingAnlge);
-        _aimingSpeed = ComponentData.Weapon.aimSpeed* angle / 180f;
+        _aimingSpeed = ComponentData.Weapon.aimSpeed * angle / 180f;
+        _rotationTime = 0;
+        _startRotation = _goOfComponent.transform.rotation;
         _aiminig = true;
     }
 
-    private bool Aimed { get { return _goOfComponent.transform.rotation == _aimingAnlge; } }
-    
     /**
      * Shot logic
      * */
@@ -110,20 +115,19 @@ public class WeaponComponent : BaseGamePlayComponent
     void Update()
     {
         //work with aiming
-        if (!Aimed)
+        if (_aiminig)
         {
-            float t = 0f;
-            if (t<1 )
+            if (_rotationTime < _aimingSpeed)
             {
-                t += Time.deltaTime / _aimingSpeed;
-                _goOfComponent.transform.rotation = Quaternion.Slerp(_goOfComponent.transform.rotation, _aimingAnlge, t);
-            }
-        } else
-        {
-            if (_aiminig && _readyToShot)
+                _rotationTime += Time.deltaTime ;
+                _goOfComponent.transform.rotation = Quaternion.Slerp(_startRotation, _aimingAnlge, _rotationTime / _aimingSpeed);
+            } else
             {
-                _aiminig = false;
-                Shot();
+                if (_readyToShot)
+                {
+                    _aiminig = false;
+                    Shot();
+                }
             }
         }
     }

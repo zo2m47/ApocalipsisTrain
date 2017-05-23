@@ -22,4 +22,10 @@ public class WeaponData
 
     [XmlAttribute("bulletView")]
     public string bulletView = "";
+
+    [XmlAttribute("bulletSpeed")]
+    public float bulletSpeed = 0.1f;
+
+    [XmlAttribute("bulletRage")]
+    public float bulletRage = 1f;
 }

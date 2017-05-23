@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,21 +19,36 @@ public class MoveBulletComponent : BaseBulletComponent
 
     private void StartMove()
     {
-        Debug.Log(AimAngle);
         _bulletController.gameObject.transform.rotation = AimAngle;
         _moving = true;
+        StartCoroutine(BulletLive());
     }
 
+    /// <summary>
+    /// Time of bullet live 
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator BulletLive()
+    {
+        yield return new WaitForSeconds(WeaponData.bulletRage);
+        PrefabCreatorManager.Instance.DestroyPrefab(_bulletController.gameObject);
+    }
+
+    /// <summary>
+    /// Bullet moving 
+    /// </summary>
     private void Update()
     {
         if (_moving)
         {
-            _bulletController.gameObject.transform.position = _bulletController.gameObject.transform.position + AimAngle * Vector3.up * 0.2f;
+            _bulletController.gameObject.transform.position = _bulletController.gameObject.transform.position + AimAngle * Vector3.up * WeaponData.bulletSpeed;
         }
     }
 
     protected override void RemoveActionListener()
     {
         base.RemoveActionListener();
+        StopCoroutine(BulletLive());
+        _moving = false;
     }
 }

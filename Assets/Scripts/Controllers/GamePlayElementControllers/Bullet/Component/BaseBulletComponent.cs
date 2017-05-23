@@ -20,11 +20,18 @@ public class BaseBulletComponent : MonoBehaviour, IRecyle
     {
         set
         {
+            Debug.Log("Set Static");
             _bulletController = value;
-            InitActionListener();
         }
     }
-    
+    /// <summary>
+    /// call from controller when static data is updated
+    /// </summary>
+    public void UpdateStaticData()
+    {
+        InitActionListener();
+    }
+
     protected WeaponData WeaponData
     {
         get

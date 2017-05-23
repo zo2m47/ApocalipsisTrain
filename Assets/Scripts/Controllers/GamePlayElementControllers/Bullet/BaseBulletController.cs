@@ -81,7 +81,7 @@ public class BaseBulletController : MonoBehaviour, IRecyle
 
     protected void FirstInit()
     {
-
+        UpdateStaticData();
     }
     /// <summary>
     /// Set weapon data and position
@@ -92,8 +92,24 @@ public class BaseBulletController : MonoBehaviour, IRecyle
     {
         _aimAngle = aimAngle;
         _weaponData = weaponData;
+        UpdateStaticData();
     }
 
+    private void UpdateStaticData()
+    {
+        if (_components == null)
+        {
+            return;
+        }
+        foreach (BaseBulletComponent com in _components)
+        {
+            com.UpdateStaticData();
+        }
+    }
+
+    /**
+     * IRecyle
+     * */
     public virtual void Restart()
     {
         
