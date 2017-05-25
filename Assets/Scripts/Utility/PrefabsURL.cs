@@ -20,16 +20,18 @@ public static class PrefabsURL
     private const string TRAINS = "Trains/";
     private const string CARRIAGES = "Carriages/";
     private const string BULLETS = "Bullets/";
-
+    private const string GAMEPLAY_LOCATION_PARTS = "GamePlayLocationParts/";
     //screens prefab
     public const string MAIN_SCREEN = BASE_FOLDER + SCREENS_FOLDER + "MainScreen";
     public const string GAME_PLAY_SCREEN = BASE_FOLDER + SCREENS_FOLDER + "GamePlayScreen";
     //Ggame view prefabs 
     public const string LOCOMOTIVE_GAME_VIEW = BASE_FOLDER + GAME_VIEW_FOLDER + "LocomotiveView";
+    public const string LOCATION_GAME_VIEW = BASE_FOLDER + GAME_VIEW_FOLDER + "LocationView";
     //Game Elemnts 
     public const string TRAIN_GAME_ELEMENT = BASE_FOLDER + GAME_VIEW_FOLDER + TRAINS;
     public const string CARRIAGES_GAME_ELEMENT = BASE_FOLDER + GAME_VIEW_FOLDER + CARRIAGES;
     public const string BULLET_GAME_ELEMENT = BASE_FOLDER + GAME_VIEW_FOLDER + BULLETS;
+    public const string GAMEPLAY_LOCATION_PARTS_GAME_ELEMENT = BASE_FOLDER + GAME_VIEW_FOLDER + GAMEPLAY_LOCATION_PARTS;
     //screens menu 
     public const string HEAD_MENU = BASE_FOLDER + MENU_FOLDER + "HeadMenu";
     

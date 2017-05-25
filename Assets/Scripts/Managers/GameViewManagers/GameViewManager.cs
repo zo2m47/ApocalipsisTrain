@@ -10,6 +10,11 @@ public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizatio
     public GameObject Container { get { return _container; } }
 
     private LocomotiveViewManager _locomotiveViewManager;
+    private LocationViewManager _locationViewManager;
+    public GameObject LocationViewContainer
+    {
+        get { return _locationViewManager.gameObject; }
+    }
 
     /**
      * Initializaiotn process 
@@ -52,7 +57,7 @@ public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizatio
 
         //creat prefab with train game view manager for view train 
         _locomotiveViewManager = PrefabCreatorManager.Instance.InstanceComponent<LocomotiveViewManager>(PrefabsURL.LOCOMOTIVE_GAME_VIEW, _container);
-
+        _locationViewManager = PrefabCreatorManager.Instance.InstanceComponent<LocationViewManager>(PrefabsURL.LOCATION_GAME_VIEW, _container);
         _initializationStatus = EnumInitializationStatus.initializated;
     }
     /***
@@ -61,5 +66,6 @@ public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizatio
     public void ShowGamePlayView()
     {
         _locomotiveViewManager.Init();
+        _locationViewManager.InitLocationParts();
     }
 }

@@ -20,7 +20,6 @@ public class BaseBulletComponent : MonoBehaviour, IRecyle
     {
         set
         {
-            Debug.Log("Set Static");
             _bulletController = value;
         }
     }

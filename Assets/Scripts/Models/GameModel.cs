@@ -8,14 +8,7 @@ using System.Text;
  * */
 public class GameModel : ModelSingleTone<GameModel>, IInitilizationProcess
 {
-    private LocomotiveSettings _locomotiveSettings = new LocomotiveSettings();
-    public LocomotiveSettings LocomotiveSettings
-    {
-        get
-        {
-            return _locomotiveSettings;
-        }
-    }
+   
     /**
      * Initialization logic 
      * */
@@ -52,9 +45,5 @@ public class GameModel : ModelSingleTone<GameModel>, IInitilizationProcess
     /**
      * Preper player Train
      * */
-    public void PrepareTrain()
-    {
-        _locomotiveSettings.AddCarriage("carriage_1");
-        _locomotiveSettings.SelectTrain("train_1");
-    }
+   
 }

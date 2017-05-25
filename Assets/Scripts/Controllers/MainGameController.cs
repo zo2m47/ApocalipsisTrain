@@ -40,6 +40,47 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
     /***
      * GameLogic
      * */
+    //moving 
+    
+    private TransmissionData _selectedTransmission;
+    public TransmissionData SelectedTransmission { get { return _selectedTransmission; } }
+    
+    private void SelectTrasmision(int index)
+    {
+        _selectedTransmission = _locomotiveSettings.Train.GetTransmissionDataByIndex(index);
+    }
+    // train settings 
+    private LocomotiveSettings _locomotiveSettings = new LocomotiveSettings();
+    public LocomotiveSettings LocomotiveSettings
+    {
+        get
+        {
+            return _locomotiveSettings;
+        }
+    }
+
+    private void PrepareTrain()
+    {
+        _locomotiveSettings.AddCarriage("carriage_1");
+        _locomotiveSettings.SelectTrain("train_1");
+        int selectedTransmisionINdex = 0;
+        for (int i = 0; i < _locomotiveSettings.Train.transmissionList.Count; i++)
+        {
+            if (i == 0)
+            {
+                selectedTransmisionINdex = _locomotiveSettings.Train.transmissionList[i].index;
+            }
+            else
+            {
+                if (selectedTransmisionINdex > _locomotiveSettings.Train.transmissionList[i].index)
+                {
+                    selectedTransmisionINdex = _locomotiveSettings.Train.transmissionList[i].index;
+                }
+            }
+        }
+        SelectTrasmision(selectedTransmisionINdex);
+    }
+
     //state of game flow at the moment
     public delegate void ChangeEmptyDelegate();
     public ChangeEmptyDelegate changeFlowStateDispatcher;
@@ -89,8 +130,11 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
     public void StartGame()
     {
         //TODO temp 
-        GameModel.Instance.PrepareTrain();
+        PrepareTrain();
         GameViewManager.Instance.ShowGamePlayView();
+
+        
+        
     }
     
     // controll of touch in game 

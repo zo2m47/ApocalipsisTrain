@@ -5,12 +5,12 @@ using System.Xml.Serialization;
 
 public class TransmissionData
 {
-    [XmlElement("index")]
+    [XmlAttribute("index")]
     public int index = 0;
 
-    [XmlElement("speed")]
+    [XmlAttribute("speed")]
     public int speed = 0;
 
-    [XmlElement("change")]
+    [XmlAttribute("change")]
     public int change = 0;
 }

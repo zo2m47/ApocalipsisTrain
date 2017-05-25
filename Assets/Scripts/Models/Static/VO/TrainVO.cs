@@ -32,7 +32,20 @@ public class TrainVO : DataVO, IGameElement, IMarketData, IComponentData
 
     [XmlArray("transmissions")]
     [XmlArrayItem("transmission")]
-    public List<TransmissionData> transmissionList = new List<TransmissionData>();
+    public List<TransmissionData> transmissionList;
+    
+    public TransmissionData GetTransmissionDataByIndex(int index)
+    {
+        for (int i = 0; i < transmissionList.Count; i++)
+        {
+            if(transmissionList[i].index == index)
+            {
+                return transmissionList[i];
+            }
+        }
+        LoggingManager.AddErrorToLog("Didn found "+index+ " transmission");
+        return transmissionList[0];
+    }
 
     public string PrefabUrl
     {
