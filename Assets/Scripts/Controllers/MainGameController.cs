@@ -37,48 +37,39 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
     {
         _initializationStatus = EnumInitializationStatus.initializated;
     }
+    
     /***
      * GameLogic
      * */
-    //moving 
-    
-    private TransmissionData _selectedTransmission;
-    public TransmissionData SelectedTransmission { get { return _selectedTransmission; } }
-    
-    private void SelectTrasmision(int index)
+    private TransmissionData _selectedTransmision;
+
+    public void SelecttransmisionByListPosition(int listPosition)
     {
-        _selectedTransmission = _locomotiveSettings.Train.GetTransmissionDataByIndex(index);
+        _selectedTransmision = _locomotiveData.Train.SortedTransmissionList[listPosition];
     }
-    // train settings 
-    private LocomotiveSettings _locomotiveSettings = new LocomotiveSettings();
-    public LocomotiveSettings LocomotiveSettings
+
+    public TransmissionData SelectedTransmision
     {
         get
         {
-            return _locomotiveSettings;
+            return _selectedTransmision;
+        }
+    }
+
+    // train settings 
+    private LocomotiveData _locomotiveData = new LocomotiveData();
+    public LocomotiveData LocomotiveData
+    {
+        get
+        {
+            return _locomotiveData;
         }
     }
 
     private void PrepareTrain()
     {
-        _locomotiveSettings.AddCarriage("carriage_1");
-        _locomotiveSettings.SelectTrain("train_1");
-        int selectedTransmisionINdex = 0;
-        for (int i = 0; i < _locomotiveSettings.Train.transmissionList.Count; i++)
-        {
-            if (i == 0)
-            {
-                selectedTransmisionINdex = _locomotiveSettings.Train.transmissionList[i].index;
-            }
-            else
-            {
-                if (selectedTransmisionINdex > _locomotiveSettings.Train.transmissionList[i].index)
-                {
-                    selectedTransmisionINdex = _locomotiveSettings.Train.transmissionList[i].index;
-                }
-            }
-        }
-        SelectTrasmision(selectedTransmisionINdex);
+        _locomotiveData.AddCarriage("carriage_1");
+        _locomotiveData.SelectTrain("train_1");
     }
 
     //state of game flow at the moment
@@ -86,6 +77,7 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
     public ChangeEmptyDelegate changeFlowStateDispatcher;
     //
     private EnumGameFlowState _gameFlowState = EnumGameFlowState.gamePlay;
+
     /// <summary>
     /// Dispatch event when game controller change game flow state
     /// </summary>
@@ -101,6 +93,7 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
             }
         }
     }
+
     // controll of selected game element
     //when player select train or carriage by tab in
     public delegate void SelectGamePlayElement();
@@ -108,6 +101,7 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
 
     private string _selectedGameElement = "carriage_1";
     public string SelectedGameElement { get { return _selectedGameElement; } }
+   
     /// <summary>
     /// Select game element in game word by user 
     /// </summary>
@@ -124,6 +118,7 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
         }
         
     }
+
     /// <summary>
     /// Finish prepering and start game
     /// </summary>
@@ -132,9 +127,6 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
         //TODO temp 
         PrepareTrain();
         GameViewManager.Instance.ShowGamePlayView();
-
-        
-        
     }
     
     // controll of touch in game 

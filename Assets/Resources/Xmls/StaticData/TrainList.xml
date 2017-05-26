@@ -24,9 +24,9 @@
       change - требуемое время для смены скорости 
       -->
       <transmissions>
-        <transmission index="1" speed="10" change="1"/>
-        <transmission index="2" speed="12" change="1"/>
-        <transmission index="3" speed="16" change="1"/>
+        <transmission index="1" speed="10" acceleration="7" braking="1"/>
+        <transmission index="2" speed="16" acceleration="5" braking="1"/>
+        <transmission index="3" speed="26" acceleration="1" braking="0"/>
       </transmissions>
       <!--
       описание оружия 

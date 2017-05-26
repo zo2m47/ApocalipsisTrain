@@ -56,6 +56,7 @@ public class UIScreenManager : ManagerSingleTone<UIScreenManager>,IInitilization
             if (!_uiScreens.ContainsKey(pair.Key))
             {
                 _uiScreens.Add(pair.Key, PrefabCreatorManager.Instance.InstanceComponent<IUIScreenController>(pair.Value, uiScreenContainer));
+                _uiScreens[pair.Key].SetDefaulStartPosition();
             } else
             {
                 LoggingManager.AddErrorToLog("Found repeat screen id " + pair.Key);
@@ -84,7 +85,7 @@ public class UIScreenManager : ManagerSingleTone<UIScreenManager>,IInitilization
                     yield return null;
                 }
             }
-
+            
             if (MainInitializationProcess.Instance.FirstScreen != EnumUIScreenID.withOutName)
             {
                 ShowScreenByID(MainInitializationProcess.Instance.FirstScreen);

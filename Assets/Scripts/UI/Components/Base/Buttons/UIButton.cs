@@ -18,6 +18,7 @@ public class UIButton : MonoBehaviour, IUIButton, IPointerClickHandler
         }
         set {
             _sourceBtn.enabled = value;
+            gameObject.SetActive(value);
         }
     }
 

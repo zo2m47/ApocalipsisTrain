@@ -64,18 +64,23 @@ public abstract class BaseUIScreenController : MonoBehaviour, IUIScreenControlle
         {
             uiNavigationControllerArray[i].Source = gameObject;
         }
+        AfterStart();
+        _initializationStatus = EnumInitializationStatus.initializated;
+    }
+
+    public void SetDefaulStartPosition()
+    {
         _baseRectTransform = gameObject.GetComponent<RectTransform>();
         if (_baseRectTransform == null)
         {
-            LoggingManager.AddErrorToLog("Didn't found RectTransform in screen "+screenID.ToString());
+            LoggingManager.AddErrorToLog("Didn't found RectTransform in screen " + screenID.ToString());
 
-        } else
-        {
-            _baseRectTransform.offsetMin = new Vector2(0, 0);
-            _baseRectTransform.offsetMax = new Vector2(0, 0);
         }
-        AfterStart();
-        _initializationStatus = EnumInitializationStatus.initializated;
+        else
+        {
+            _baseRectTransform.offsetMin = new Vector3(0, 0, 0);
+            _baseRectTransform.offsetMax = new Vector3(0, 0, 0);
+        }
     }
 
     protected virtual void AfterStart()

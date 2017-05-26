@@ -9,8 +9,11 @@ public class TransmissionData
     public int index = 0;
 
     [XmlAttribute("speed")]
-    public int speed = 0;
+    public float speed = 0;
 
-    [XmlAttribute("change")]
-    public int change = 0;
+    [XmlAttribute("acceleration")]
+    public float acceleration = 0;
+
+    [XmlAttribute("braking")]
+    public float braking = 0;
 }

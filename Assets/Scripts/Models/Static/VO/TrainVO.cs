@@ -33,7 +33,21 @@ public class TrainVO : DataVO, IGameElement, IMarketData, IComponentData
     [XmlArray("transmissions")]
     [XmlArrayItem("transmission")]
     public List<TransmissionData> transmissionList;
-    
+    private bool _sorted = false;
+
+    public List<TransmissionData> SortedTransmissionList
+    {
+        get
+        {
+            if (!_sorted)
+            {
+                transmissionList.Sort((p1, p2) => p1.index.CompareTo(p2.index));
+                _sorted = true;
+            }
+            return transmissionList;
+        }
+    }
+
     public TransmissionData GetTransmissionDataByIndex(int index)
     {
         for (int i = 0; i < transmissionList.Count; i++)

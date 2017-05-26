@@ -5,9 +5,12 @@ using UnityEngine;
 /***
  * Class with logic of Train in game
  * */
-public class TrainGamePlayController : BaseGamePlayController
+public class TrainGamePlayController : GamePlayController
 {
-    public override IStaticData StaticData
+    [SerializeField]
+    private GameObject _connector;
+    public GameObject Connector { get { return _connector; } }
+    public override object StaticData
     {
         get
         {

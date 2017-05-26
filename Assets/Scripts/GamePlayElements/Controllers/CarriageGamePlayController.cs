@@ -4,9 +4,12 @@ using UnityEngine;
 /***
  * Class with logic of carriage in game 
  * */
-public class CarriageGamePlayController : BaseGamePlayController
+public class CarriageGamePlayController : GamePlayController
 {
-    public override IStaticData StaticData
+    [SerializeField]
+    private GameObject _connector;
+    public GameObject Connector { get { return _connector; } }
+    public override object StaticData
     {
         get
         {

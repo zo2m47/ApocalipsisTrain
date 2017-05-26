@@ -18,7 +18,7 @@ using UnityEngine;
  * Component with logic of weapon shooting
  * */
 
-public class WeaponComponent : BaseGamePlayComponent
+public class WeaponComponent : GamePlayComponent
 {
     [SerializeField]
     private Transform _bulletStartPosition;
@@ -30,34 +30,31 @@ public class WeaponComponent : BaseGamePlayComponent
 
     public override void Restart()
     {
+        base.Restart();
+        AddComponentListener(EnumComponentAction.attack, ActionListener);
+    }
+    
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        RemoveComponentListener(EnumComponentAction.attack, ActionListener);
+    }
+    
+
+    protected override void InitStaticData()
+    {
         _readyToShot = true;
     }
-
-    /**
-     * Listener 
-     * */
-    protected override void InitListener()
-    {
-        base.InitListener();
-        AddComponentListener(EnumComponentGroupAction.attack, ActionListener);
-    }
-
-    protected override void RemoveAllListener()
-    {
-        base.RemoveAllListener();
-        RemoveListener(EnumComponentGroupAction.attack, ActionListener);
-    }
-
     /** 
      * call back of attack listener 
      */
-    private void ActionListener(IComponentAction componentActionData)
+    private void ActionListener(IComponentActionData componentActionData)
     {
         if(MainGameController.Instance.SelectedGameElement == StaticName)
         {
             _attackComponenAction = componentActionData as AttackComponenAction;
             //aim weapon
-            if (_attackComponenAction.Action == EnumComponentAction.aim)
+            if (_attackComponenAction.Action == EnumComponentAction.attack)
             {
                 StartAiming();
             }
@@ -87,7 +84,7 @@ public class WeaponComponent : BaseGamePlayComponent
     private void Shot()
     {
         WeaponData weaponData = ComponentData.Weapon;
-        BaseBulletController baseBulletController = PrefabCreatorManager.Instance.InstanceComponent<BaseBulletController>(PrefabsURL.BULLET_GAME_ELEMENT + weaponData.bulletView,GameViewManager.Instance.Container,EnumPositioning.global,_bulletStartPosition.position);
+        BulletGamePlayController baseBulletController = PrefabCreatorManager.Instance.InstanceComponent<BulletGamePlayController>(PrefabsURL.BULLET_GAME_ELEMENT + weaponData.bulletView,GameViewManager.Instance.Container,EnumPositioning.global,_bulletStartPosition.position);
         baseBulletController.SetBulletSettings(weaponData, _aimingAnlge);
         //go to calldown
         StartCooldown();

@@ -110,7 +110,7 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
         yield break;
     }
 
-
+    private bool _uiElement = false;
     //ray cast
     protected void GetHitRay()
     {
@@ -172,7 +172,10 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
         //Just for current game
         else
         {
-            MainGameController.Instance.WordTouchCordinat(_newTouchPosition);
+            if (EventSystem.current.currentSelectedGameObject == null)
+            {
+                MainGameController.Instance.WordTouchCordinat(_newTouchPosition);
+            }
         }
     }
 

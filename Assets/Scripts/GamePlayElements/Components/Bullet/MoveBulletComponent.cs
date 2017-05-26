@@ -7,23 +7,29 @@ using UnityEngine;
 /**
  * Bullet moving to point 
  * */
-public class MoveBulletComponent : BaseBulletComponent
+public class MoveBulletComponent : BulletGamePlayComponent
 {
     private bool _moving = false;
 
-    protected override void InitActionListener()
+    protected override void InitStaticData()
     {
-        base.InitActionListener();
         StartMove();
     }
 
     private void StartMove()
     {
-        _bulletController.gameObject.transform.rotation = AimAngle;
         _moving = true;
+        BulletGamePlayController.gameObject.transform.rotation = AimAngle;
         StartCoroutine(BulletLive());
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        StopCoroutine(BulletLive());
+        _moving = false;
+    }
+    
     /// <summary>
     /// Time of bullet live 
     /// </summary>
@@ -31,7 +37,7 @@ public class MoveBulletComponent : BaseBulletComponent
     private IEnumerator BulletLive()
     {
         yield return new WaitForSeconds(WeaponData.bulletRage);
-        PrefabCreatorManager.Instance.DestroyPrefab(_bulletController.gameObject);
+        PrefabCreatorManager.Instance.DestroyPrefab(BulletGamePlayController.gameObject);
     }
 
     /// <summary>
@@ -39,16 +45,10 @@ public class MoveBulletComponent : BaseBulletComponent
     /// </summary>
     private void Update()
     {
-        if (_moving)
+        
+        if (_moving && BulletGamePlayController!=null)
         {
-            _bulletController.gameObject.transform.position = _bulletController.gameObject.transform.position + AimAngle * Vector3.up * WeaponData.bulletSpeed;
+             BulletGamePlayController.gameObject.transform.position = BulletGamePlayController.gameObject.transform.position + AimAngle * Vector3.up * WeaponData.bulletSpeed;
         }
-    }
-
-    protected override void RemoveActionListener()
-    {
-        base.RemoveActionListener();
-        StopCoroutine(BulletLive());
-        _moving = false;
     }
 }

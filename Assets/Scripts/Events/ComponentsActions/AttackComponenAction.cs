@@ -4,31 +4,23 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class AttackComponenAction : IComponentAction
+public class AttackComponenAction : IComponentActionData
 {
-    private EnumComponentAction _action;
-    public EnumComponentAction Action
-    {
-        get
-        {
-            return _action;
-        }
-    }
-    public EnumComponentGroupAction GroupAction
-    {
-        get
-        {
-            return EnumComponentGroupAction.attack;
-        }
-    }
-
+    
     //position in the world 
     private Vector3 _wordTouchedPosition;
     public Vector3 WordTouchedPosition{get{ return _wordTouchedPosition; }}
 
-    public AttackComponenAction(EnumComponentAction action, Vector3 wordTouchedPosition)
+    public EnumComponentAction Action
     {
-        _action = action;
+        get
+        {
+            return EnumComponentAction.attack;
+        }
+    }
+
+    public AttackComponenAction(Vector3 wordTouchedPosition)
+    {
         _wordTouchedPosition = wordTouchedPosition;
     }
 }
