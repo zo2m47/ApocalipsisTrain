@@ -7,8 +7,7 @@ using UnityEngine;
 public class LocationViewManager : MonoBehaviour
 {
     private const int CountOfParts = 3;
-    private float _speed = 0;
-
+    
     private float _acceleration = 0;
     private float _braking = 0;
 
@@ -44,6 +43,18 @@ public class LocationViewManager : MonoBehaviour
         StartMove();
     }
 
+    public float Width
+    {
+        get
+        {
+            if (_locationPartList.Count == 0)
+            {
+                return 0;
+            }
+            return _locationPartList[0].Width;
+        }
+    }
+
     public void StartMove()
     {
         _moving = true;
@@ -53,25 +64,25 @@ public class LocationViewManager : MonoBehaviour
     {
         if (_moving)
         {
-            if (_speed<MainGameController.Instance.SelectedTransmision.speed)
+            if (_acceleration<MainGameController.Instance.SelectedTransmision.speed)
             {
-                _speed += MainGameController.Instance.SelectedTransmision.acceleration;
-                if (_speed> MainGameController.Instance.SelectedTransmision.speed)
+                _acceleration += MainGameController.Instance.SelectedTransmision.acceleration * Time.deltaTime;
+                if (_acceleration> MainGameController.Instance.SelectedTransmision.speed)
                 {
-                    _speed = MainGameController.Instance.SelectedTransmision.speed;
+                    _acceleration = MainGameController.Instance.SelectedTransmision.speed;
                 }
             }
 
-            if (_speed > MainGameController.Instance.SelectedTransmision.speed)
+            if (_acceleration > MainGameController.Instance.SelectedTransmision.speed)
             {
-                _speed -= MainGameController.Instance.SelectedTransmision.braking;
-                if (_speed < MainGameController.Instance.SelectedTransmision.speed)
+                _acceleration -= MainGameController.Instance.SelectedTransmision.braking * Time.deltaTime;
+                if (_acceleration < MainGameController.Instance.SelectedTransmision.speed)
                 {
-                    _speed = MainGameController.Instance.SelectedTransmision.braking;
+                    _acceleration = MainGameController.Instance.SelectedTransmision.speed;
                 }
             }
 
-            gameObject.transform.Translate(Vector3.down * (_speed * Time.deltaTime));
+            gameObject.transform.Translate(Vector3.down * (_acceleration*Time.deltaTime));
             if (_locationPartList[0].gameObject.transform.position.y< -1*_locationPartList[0].Height)
             {
                 float yPosition = _locationPartList[_locationPartList.Count - 1].gameObject.transform.position.y;

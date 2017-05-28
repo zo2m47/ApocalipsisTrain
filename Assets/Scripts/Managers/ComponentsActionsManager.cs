@@ -82,11 +82,11 @@ public class ComponentsActionsManager : ManagerSingleTone<ComponentsActionsManag
     /// <param name="componentActionData">data of this action</param>
     private void CallComponentAction(IComponentActionData componentActionData)
     {
-        if (_commponentActionDispatcher.ContainsKey(componentActionData.Action))
+        if (_commponentActionDispatcher.ContainsKey(componentActionData.ComponentAction))
         {
-            for (int i = 0; i < _commponentActionDispatcher[componentActionData.Action].Count; i++)
+            for (int i = 0; i < _commponentActionDispatcher[componentActionData.ComponentAction].Count; i++)
             {
-                _commponentActionDispatcher[componentActionData.Action][i].DynamicInvoke(componentActionData);
+                _commponentActionDispatcher[componentActionData.ComponentAction][i].DynamicInvoke(componentActionData);
             }
         }
     }
@@ -98,9 +98,26 @@ public class ComponentsActionsManager : ManagerSingleTone<ComponentsActionsManag
     /// Action of toch word by player
     /// </summary>
     /// <param name="wordPosition"></param>
-    private void WordTouchListener(Vector3 wordPosition)
+    private void WordTouchListener(EnumInputAction inputAction, Vector3 wordPosition)
     {
-        CallComponentAction(new AttackComponenAction(wordPosition));
+        switch (inputAction)
+        {
+            case EnumInputAction.touch:
+                CallComponentAction(new WordComponentActionData(EnumComponentAction.wordTouch, wordPosition));
+                break;
+            case EnumInputAction.clicked:
+                CallComponentAction(new WordComponentActionData(EnumComponentAction.wordClicked, wordPosition));
+                break;
+            case EnumInputAction.draging:
+                CallComponentAction(new WordComponentActionData(EnumComponentAction.wordDragging, wordPosition));
+                break;
+            case EnumInputAction.stopDrag:
+                CallComponentAction(new WordComponentActionData(EnumComponentAction.wordClicked, wordPosition));
+                break;
+            default:
+                break;
+        }
+        
     }
 
 }

@@ -9,9 +9,9 @@ using UnityEngine.UI;
 public class GamePlayScreenController : BaseUIScreenController, IMainScreenDataProvider
 {
     [SerializeField]
-    private UIButton _upTransmisionButton;
+    private UIButtonClicker _upTransmisionButton;
     [SerializeField]
-    private UIButton _downTransmisionButton;
+    private UIButtonClicker _downTransmisionButton;
     [SerializeField]
     private Text _tfTransmisionIndex;
 

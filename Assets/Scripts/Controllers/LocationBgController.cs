@@ -6,8 +6,33 @@ using UnityEngine;
 
 public class LocationBgController : MonoBehaviour
 {
-    [SerializeField]
-    private SpriteRenderer _locationImage;
-    public float Height { get { return _locationImage.bounds.size.y; } }
-    public float Width { get { return _locationImage.bounds.size.x; } }
+    private float _width = 0;
+    private float _height = 0;
+
+    public float Width {
+        get
+        {
+            SetSize();
+            return _width;
+        }
+    }
+
+    public float Height
+    {
+        get
+        {
+            SetSize();
+            return _height;
+        }
+    }
+
+    private void SetSize()
+    {
+        if (_width == 0 || _height == 0)
+        {
+            Renderer render = gameObject.GetComponent<Renderer>();
+            _width = render.bounds.size.x;
+            _height = render.bounds.size.y;
+        }
+    }
 }

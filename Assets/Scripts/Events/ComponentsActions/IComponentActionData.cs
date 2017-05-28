@@ -5,11 +5,13 @@ using System.Text;
 
 public enum EnumComponentAction
 {
-    attack
+    wordTouch,
+    wordClicked,
+    wordDragging
 }
 
 
 public interface IComponentActionData
 {
-    EnumComponentAction Action { get; }
+    EnumComponentAction ComponentAction { get; }
 }

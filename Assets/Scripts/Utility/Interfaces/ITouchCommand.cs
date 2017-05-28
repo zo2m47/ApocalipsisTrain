@@ -9,5 +9,5 @@ interface ITouchCommand
     void TouchMoved(Vector3 movedPosition);
     void TouchStartDrag();
     void TouchStopDrag();
-    bool draggable { get; }
+    bool Draggable { get; }
 }

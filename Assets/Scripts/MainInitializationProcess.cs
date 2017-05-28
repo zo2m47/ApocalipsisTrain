@@ -31,6 +31,7 @@ public class MainInitializationProcess : SingletonMonoBehaviour<MainInitializati
         _initializationList.Add(MainGameController.Instance);
         _initializationList.Add(MouseInputController.Instance);
         _initializationList.Add(ComponentsActionsManager.Instance);
+        _initializationList.Add(CameraNavigationManager.Instance);
         StartInitialization();
     }
 

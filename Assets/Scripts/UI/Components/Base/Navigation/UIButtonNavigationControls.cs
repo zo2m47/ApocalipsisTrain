@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class UIButtonNavigationControls : BaseNavigationControls
 {
-    public UIButton BtnNext;
-    public UIButton BtnPrevious;
+    public UIButtonClicker BtnNext;
+    public UIButtonClicker BtnPrevious;
 
     public override bool Enabled
     {

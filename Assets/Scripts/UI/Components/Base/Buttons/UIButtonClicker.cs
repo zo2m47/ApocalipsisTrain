@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIButton : MonoBehaviour, IUIButton, IPointerClickHandler
+public class UIButtonClicker : MonoBehaviour, IUIButton, IPointerClickHandler
 {
     protected Button _sourceBtn;
 

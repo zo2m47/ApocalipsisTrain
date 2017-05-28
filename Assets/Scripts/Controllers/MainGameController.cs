@@ -35,6 +35,7 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
 
     public void StartInitialization()
     {
+        InputController.Instance.wordTouchDispatcher += InputReaction;
         _initializationStatus = EnumInitializationStatus.initializated;
     }
     
@@ -131,18 +132,18 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
     
     // controll of touch in game 
     //cpmmponents add listener to this event, if it need 
-    public delegate void GamePlayWordTouchDispatcher(Vector3 touchPosition);
+    public delegate void GamePlayWordTouchDispatcher(EnumInputAction action,Vector3 touchPosition);
     public GamePlayWordTouchDispatcher gamePlaywordTouchDispatcher;
 
     /// <summary>
     /// Word click
     /// </summary>
     /// <param name="position">position of click in word</param>
-    public void WordTouchCordinat(Vector3 position)
+    public void InputReaction(EnumInputAction action, Vector3 position)
     {
-        if(gamePlaywordTouchDispatcher!=null && _gameFlowState == EnumGameFlowState.gamePlay)
+        if(gamePlaywordTouchDispatcher!=null)
         {
-            gamePlaywordTouchDispatcher(position);
+            gamePlaywordTouchDispatcher(action,position);
         }
     }
 }

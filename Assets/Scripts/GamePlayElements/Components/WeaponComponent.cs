@@ -26,18 +26,18 @@ public class WeaponComponent : GamePlayComponent
     private bool _readyToShot = false;
     private bool _aiminig = false;
     //data of event
-    private AttackComponenAction _attackComponenAction;
+    private WordComponentActionData _wordComponentActionData;
 
     public override void Restart()
     {
         base.Restart();
-        AddComponentListener(EnumComponentAction.attack, ActionListener);
+        AddComponentListener(EnumComponentAction.wordTouch, ActionListener);
     }
     
     public override void Shutdown()
     {
         base.Shutdown();
-        RemoveComponentListener(EnumComponentAction.attack, ActionListener);
+        RemoveComponentListener(EnumComponentAction.wordTouch, ActionListener);
     }
     
 
@@ -52,9 +52,9 @@ public class WeaponComponent : GamePlayComponent
     {
         if(MainGameController.Instance.SelectedGameElement == StaticName)
         {
-            _attackComponenAction = componentActionData as AttackComponenAction;
+            _wordComponentActionData = componentActionData as WordComponentActionData;
             //aim weapon
-            if (_attackComponenAction.Action == EnumComponentAction.attack)
+            if (_wordComponentActionData.ComponentAction == EnumComponentAction.wordTouch)
             {
                 StartAiming();
             }
@@ -70,7 +70,7 @@ public class WeaponComponent : GamePlayComponent
     private Quaternion _startRotation;
     private void StartAiming()
     {
-        _aimingAnlge = Quaternion.LookRotation(Vector3.forward, _attackComponenAction.WordTouchedPosition - _goOfComponent.transform.position);
+        _aimingAnlge = Quaternion.LookRotation(Vector3.forward, _wordComponentActionData.WordTouchedPosition - _goOfComponent.transform.position);
         var angle = Quaternion.Angle(_goOfComponent.transform.rotation,_aimingAnlge);
         _aimingSpeed = ComponentData.Weapon.aimSpeed * angle / 180f;
         _rotationTime = 0;

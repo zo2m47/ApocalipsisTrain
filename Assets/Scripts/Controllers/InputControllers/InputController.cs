@@ -7,8 +7,31 @@ using UnityEngine.UI;
 /**
 * Controll of input 
 * */
+public enum EnumInputAction
+{
+    touch,
+    clicked,
+    startDrag,
+    draging,
+    stopDrag
+}
+
 public class InputController : ControllerSingleTone<InputController>, IInitilizationProcess, ITouchCommand
 {
+
+    /* Dispatch action for listener out class 
+     * */
+    public delegate void WordTouchDispatcher(EnumInputAction action, Vector3 touchPosition);
+    public WordTouchDispatcher wordTouchDispatcher;
+    private void DispatchWordTouchAction(EnumInputAction action)
+    {
+        if (wordTouchDispatcher!=null)
+        {
+            wordTouchDispatcher(action, _newTouchPosition);
+        }
+    }
+
+    //
     private const int START_DRAG_TIMER = 10;
     private const float SPEED_DRAG_TIMER = 1;
 
@@ -21,10 +44,6 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
 
     private Vector3 _oldTouchPosition;
     private Vector3 _newTouchPosition;
-
-    //in main menu 
-    private bool _justOnlyDragInWorld = false;
-    public bool justOnlyDragInWorld{set{_justOnlyDragInWorld = value;}}
 
     // UI element was touched 
     private bool _uiELementWasTouched = false;
@@ -65,19 +84,33 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
     //take touch position, after touch started, call frome child
     public void TouchedInPosition(Vector3 startPosition)
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (_touched)
         {
             return;
         }
+
         _newTouchPosition = Camera.main.ScreenToWorldPoint(startPosition);
         _touched = true;
         _touchTimer = 0;
+
         GetHitRay();
     }
 
     //stop touched, call frome child   
     public void StopTouched()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            _touched = false;
+            _draging = false;
+            return;
+        }
+
         if (_touched)
         {
             TouchClick();
@@ -88,29 +121,6 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
         }
     }
 
-    /*
-    If user click in UI elements 
-    */
-    public void ClickedInUiElement()
-    {
-        _uiELementWasTouched = true;
-        if (_draging)
-        {
-            TouchStopDrag();
-        }
-        _touched = false;
-
-        StartCoroutine(DontCatchTounch());
-    }
-
-    private IEnumerator DontCatchTounch()
-    {
-        yield return null;
-        _uiELementWasTouched = false;
-        yield break;
-    }
-
-    private bool _uiElement = false;
     //ray cast
     protected void GetHitRay()
     {
@@ -124,33 +134,22 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
                 return;
             }
         }
+        DispatchWordTouchAction(EnumInputAction.touch);
         _touchCommand = null;
     }
+
     //call by child ever Frame in childe update function
     public void ChekOnTouching(Vector3 newPosition)
     {
         if (_touched)
         {
-            //dont use Just for current game
-            //if dont need touch to space world, can uncomant 
-            if (_touchCommand == null && _justOnlyDragInWorld)
+            if (_touchTimer < START_DRAG_TIMER)
             {
-                TouchStartDrag();
+                _touchTimer += SPEED_DRAG_TIMER + Time.deltaTime;
             }
             else
             {
-            //if touch some time, so start draging;
-            if (_touchTimer < START_DRAG_TIMER)
-                {
-                    _touchTimer += SPEED_DRAG_TIMER + Time.deltaTime;
-                }
-                else
-                {
-                    if (draggable)
-                    {
-                        TouchStartDrag();
-                    } 
-                }
+                TouchStartDrag();
             }
         }
 
@@ -172,10 +171,7 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
         //Just for current game
         else
         {
-            if (EventSystem.current.currentSelectedGameObject == null)
-            {
-                MainGameController.Instance.WordTouchCordinat(_newTouchPosition);
-            }
+            DispatchWordTouchAction(EnumInputAction.clicked);
         }
     }
 
@@ -184,13 +180,14 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
         _oldTouchPosition = _newTouchPosition;
         _newTouchPosition = Camera.main.ScreenToWorldPoint(movedPosition);
         //if touched object is not draggable will start dragging of camera
-        if (draggable)
+        if (Draggable)
         {
             _touchCommand.TouchMoved(_newTouchPosition- _oldTouchPosition);
         }
         else
         {
             Vector3 move = _oldTouchPosition - _newTouchPosition;
+            DispatchWordTouchAction(EnumInputAction.draging);
             //CameraNavigationManager.Instance.MoveToNewPosition(move);
         }
     }
@@ -199,26 +196,33 @@ public class InputController : ControllerSingleTone<InputController>, IInitiliza
     {
         _touched = false;
         _draging = true;
-        if (draggable)
+        if (Draggable)
         {
             _touchCommand.TouchStartDrag();
+        } else
+        {
+            DispatchWordTouchAction(EnumInputAction.startDrag);
         }
     }
 
     public void TouchStopDrag()
     {
         _draging = false;
-        if (draggable)
+        if (Draggable)
         {
             _touchCommand.TouchStopDrag();
         }
+        else
+        {
+            DispatchWordTouchAction(EnumInputAction.stopDrag);
+        }
     }
 
-    public bool draggable
+    public bool Draggable
     {
         get
         {
-            return (_touchCommand != null && _touchCommand.draggable);
+            return (_touchCommand != null && _touchCommand.Draggable);
         }
     }
 }
