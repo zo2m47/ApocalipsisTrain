@@ -4,19 +4,19 @@ using UnityEngine;
  * Controller of Camera
  * Add in unity 
  * */
-public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager>,IInitilizationProcess
+public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager>, IInitilizationProcess
 {
-    private const float CAMERA_DRAG_SPEED = 2;
-    private const float CAMERA_MOVE_SPEED = 1f;
-    private const int CAMERA_ZOOM_SPEED = 50;
+    private static float CAMERA_DRAG_SPEED {get{return 2/ _PIXELSTOUNITS;}}
+    private static float CAMERA_MOVE_SPEED { get { return 1 / _PIXELSTOUNITS; } }
+    private static float CAMERA_ZOOM_SPEED {get{ return 50 / _PIXELSTOUNITS; } }
+    private const  int _PIXELSTOUNITS = 1;
 
     [SerializeField]
     private Camera _mainCamera;
 
     [SerializeField]
-    private int _targetWidth = 1000;
+    private int _targetWidth = 100;
     private int _oldTargetWidth = 0;
-    private float _pixelsToUnits = 100;
 
     [SerializeField]
     private float _cameraMoveSpeed = 10;
@@ -31,19 +31,25 @@ public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager
     [SerializeField]
     private float _bottomLimit;
     [SerializeField]
-    private int _minZoomWidth = 200;
+    private int _minZoomWidth = 100/ _PIXELSTOUNITS;
 
     private Vector3 _newPosition = new Vector3(0,0,0);
 
     //size 
+    [SerializeField]
     private float _bgWidth = 0f;
+    [SerializeField]
     private float _bgHeight = 0f;
-
+    [SerializeField]
     private float _oldScreenWidth = 0f;
+    [SerializeField]
     private float _oldScreenHeight = 0f;
 
     private bool _setMaxCameraSize = false;
-
+    public void SetMaxCameraSize()
+    {
+        _setMaxCameraSize = true;
+    }
     /*
      * Initialization process
      * */
@@ -82,14 +88,13 @@ public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager
     //Update is called once per frame
     void Update()
     {
-        if (!GameViewManager.Instance.StartShow)
+        if (!MainInitializationProcess.Instance.allInitializated)
         {
             return;
         }
 
-        if (!MainInitializationProcess.Instance.allInitializated)
+        if (!MainGameController.Instance.MoveCamera)
         {
-            _setMaxCameraSize = true;
             return;
         }
 
@@ -106,10 +111,10 @@ public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager
 
         if (CheckOnNewBGSize() || _targetWidth != _oldTargetWidth || changeViewProportions)
         {
-            int height = Mathf.RoundToInt(_targetWidth / (float)Screen.width * Screen.height);
-            
+            float h = _targetWidth  * (float)Screen.height / (float)Screen.width;
+            int height = Mathf.RoundToInt(h);
             //check on size camera and bg 
-            if (height  > GameViewManager.Instance.Height)
+            if (height  > _bgHeight)
             {
                 //LoggingManager.AddErrorToLog("HEIGHT TO BIG");
                 ZoomCameraIn(CAMERA_ZOOM_SPEED);
@@ -118,7 +123,7 @@ public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager
 
             }
             //check on size camera and bg 
-            if (_targetWidth  > GameViewManager.Instance.Width)
+            if (_targetWidth  > _bgWidth)
             {
                 //LoggingManager.AddErrorToLog("WIDTH TO BIG");
                 ZoomCameraIn(CAMERA_ZOOM_SPEED);
@@ -136,7 +141,7 @@ public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager
                     LoggingManager.AddErrorToLog("Didn't found maint camera");
                 }
             }
-            
+
             _mainCamera.orthographicSize = height / 2;
 
             //set new limits 
@@ -186,14 +191,14 @@ public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager
         {
             return;
         }
-        float moveSpeed = _pixelsToUnits* _cameraMoveSpeed * Time.deltaTime;
+        float moveSpeed = _cameraMoveSpeed *_PIXELSTOUNITS* Time.deltaTime;
         transform.position = Vector3.Lerp(transform.position, _newPosition, moveSpeed);
     }
 
     public void SetDefaultSettings()
     {
         _setMaxCameraSize = false;
-        _targetWidth = (int)GameViewManager.Instance.Width;
+        _targetWidth = Mathf.RoundToInt(GameViewManager.Instance.Width*_PIXELSTOUNITS);
 
         _mainCamera.transform.position = new Vector3(0, 0, _mainCamera.transform.position.z);
         _newPosition = new Vector3(0, 0, _mainCamera.transform.position.z); 
@@ -218,12 +223,14 @@ public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager
     //check on new background size
     private bool CheckOnNewBGSize()
     {
-        if (_bgWidth == GameViewManager.Instance.Width && _bgHeight == GameViewManager.Instance.Height)
+        var w = GameViewManager.Instance.Width * _PIXELSTOUNITS;
+        var h = GameViewManager.Instance.Height * _PIXELSTOUNITS;
+        if (_bgWidth == w && _bgHeight == h)
         {
             return false;
         }
-        _bgWidth = GameViewManager.Instance.Width;
-        _bgHeight = GameViewManager.Instance.Height;
+        _bgWidth = w;
+        _bgHeight = h;
         return true;
     }
 
@@ -268,14 +275,14 @@ public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager
 
     /*new zoom camera by keyboard
      * */
-    private void ZoomCameraIn(int step)
+    private void ZoomCameraIn(float step)
     {
-        _targetWidth -=step;
+        _targetWidth -=Mathf.RoundToInt(step);
     }
 
-    private void ZoomCameraOut(int step)
+    private void ZoomCameraOut(float step)
     {
-        _targetWidth += step;
+        _targetWidth += Mathf.RoundToInt(step);
     }
 
     /*Check on limits current position

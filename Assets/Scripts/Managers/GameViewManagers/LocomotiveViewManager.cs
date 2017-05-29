@@ -30,6 +30,7 @@ public class LocomotiveViewManager : MonoBehaviour
         //creat instance of train
         _trainGameController = PrefabCreatorManager.Instance.InstanceComponent<TrainGamePlayController>(TrainStaticData.PrefabUrl, _container);
         _trainGameController.StaticData = TrainStaticData;
+        _height = 0;
         _height += _trainGameController.Height;
         //crat instance of carrieages 
         _carriageList = new List<CarriageGamePlayController>();

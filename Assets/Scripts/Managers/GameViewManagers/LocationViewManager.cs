@@ -37,23 +37,30 @@ public class LocationViewManager : MonoBehaviour
             {
                 verticalPosition += locationPart.Height;
             }
-            locationPart.gameObject.transform.position = new Vector3(0, verticalPosition, 0);
+            locationPart.gameObject.transform.localPosition = new Vector3(0, verticalPosition, 0);
             _locationPartList.Add(locationPart);
         }
+        _width = _locationPartList[0].Width;
+        _height = _locationPartList[0].Height*2;
         StartMove();
     }
-
+    private float _width = 0;
+    private float _height = 0;
     public float Width
     {
         get
         {
-            if (_locationPartList.Count == 0)
-            {
-                return 0;
-            }
-            return _locationPartList[0].Width;
+            return _width;
         }
     }
+    public float Height
+    {
+        get
+        {
+            return _height;
+        }
+    }
+
 
     public void StartMove()
     {

@@ -57,8 +57,8 @@ public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizatio
         }
 
         //creat prefab with train game view manager for view train 
-        _locomotiveViewManager = PrefabCreatorManager.Instance.InstanceComponent<LocomotiveViewManager>(PrefabsURL.LOCOMOTIVE_GAME_VIEW, _container);
-        _locationViewManager = PrefabCreatorManager.Instance.InstanceComponent<LocationViewManager>(PrefabsURL.LOCATION_GAME_VIEW, _container);
+        _locomotiveViewManager = PrefabCreatorManager.Instance.InstanceComponent<LocomotiveViewManager>(PrefabsURL.LOCOMOTIVE_GAME_VIEW, _container,EnumPositioning.local,new Vector3(0,0,0));
+        _locationViewManager = PrefabCreatorManager.Instance.InstanceComponent<LocationViewManager>(PrefabsURL.LOCATION_GAME_VIEW, _container, EnumPositioning.local, new Vector3(0, 0, 10));
 
         _initializationStatus = EnumInitializationStatus.initializated;
     }
@@ -75,7 +75,7 @@ public class GameViewManager : ManagerSingleTone<GameViewManager>, IInitilizatio
     {
         get
         {
-            return _locomotiveViewManager.Height;
+            return _locationViewManager.Height;
         }
     }
     /***

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MainGameController : ControllerSingleTone<MainGameController>, IInitilizationProcess
 {
-
     /**
      * Initialization process 
      * */
@@ -36,6 +35,7 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
     public void StartInitialization()
     {
         InputController.Instance.wordTouchDispatcher += InputReaction;
+        _gameFlowState = EnumGameFlowState.mainMenu;
         _initializationStatus = EnumInitializationStatus.initializated;
     }
     
@@ -120,12 +120,16 @@ public class MainGameController : ControllerSingleTone<MainGameController>, IIni
         
     }
 
+    public bool MoveCamera { get { return _gameFlowState == EnumGameFlowState.gamePlay; } }
+
     /// <summary>
     /// Finish prepering and start game
     /// </summary>
     public void StartGame()
     {
         //TODO temp 
+        CameraNavigationManager.Instance.SetMaxCameraSize();
+        CahngeGameState(EnumGameFlowState.gamePlay);
         PrepareTrain();
         GameViewManager.Instance.ShowGamePlayView();
     }

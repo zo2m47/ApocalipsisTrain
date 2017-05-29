@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum EnumGameFlowState
 {
+    mainMenu,
     preperingToGame,
     loadingGame,
     gamePlay,
-    pause,
-    gameOver
+    pause
 }

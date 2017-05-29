@@ -58,7 +58,7 @@ public class PrefabCreatorManager : ManagerSingleTone<PrefabCreatorManager>
             {
                 instance.transform.position = pos;
             }
-        }
+        } 
         return instance;
     }
 
