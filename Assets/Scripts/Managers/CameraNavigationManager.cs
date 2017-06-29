@@ -88,6 +88,7 @@ public class CameraNavigationManager : ManagerSingleTone<CameraNavigationManager
     //Update is called once per frame
     void Update()
     {
+        return;
         if (!MainInitializationProcess.Instance.allInitializated)
         {
             return;
